@@ -8,6 +8,7 @@
 <script>
 import NaviBar from "@/components/layout/HeaderNaviBar.vue";
 
+//주석
 export default {
   name: "App",
   components: {
