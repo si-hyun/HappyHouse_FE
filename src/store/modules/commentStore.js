@@ -32,7 +32,7 @@ const commentStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
     writeComment({ commit }, comment) {

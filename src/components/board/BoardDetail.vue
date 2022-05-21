@@ -83,7 +83,7 @@ export default {
       },
       (error) => {
         console.log("삭제시 에러발생!!", error);
-      }
+      },
     );
     console.log(this.$store);
     this.getComment(this.$route.params.articleno);
