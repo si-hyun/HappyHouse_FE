@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { sidoList, gugunList, houseList } from "@/api/house.js";
 
 /* eslint-disable */
