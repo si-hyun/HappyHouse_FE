@@ -37,21 +37,38 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-input-group prepend="댓글 추가" class="mb-5">
+      <b-form-textarea v-model="newcontent"></b-form-textarea>
+      <b-button @click="writeNewComment" variant="primary">추가</b-button>
+    </b-input-group>
+    <!-- 하위 component인 ListRow에 데이터 전달(props) -->
+    <board-comment-item
+      v-for="comment in this.comments"
+      :comment="comment"
+      :key="comment.commentno"
+      v-bind="comment"
+    />
   </b-container>
 </template>
-
 <script>
 // import moment from "moment";
 import { getArticle, deleteArticle } from "@/api/board";
+import BoardCommentItem from "@/components/board/item/BoardCommentItem";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "BoardDetail",
+  components: { BoardCommentItem },
+
   data() {
     return {
       article: {},
+      fields: ["userid", "content", "regtime"],
+      newcontent: "",
     };
   },
   computed: {
+    ...mapGetters("commentStore", ["comments"]),
     message() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");
@@ -66,10 +83,13 @@ export default {
       },
       (error) => {
         console.log("삭제시 에러발생!!", error);
-      },
+      }
     );
+    console.log(this.$store);
+    this.getComment(this.$route.params.articleno);
   },
   methods: {
+    ...mapActions("commentStore", ["getComment", "writeComment"]),
     listArticle() {
       this.$router.push({ name: "boardList" });
     },
@@ -86,6 +106,15 @@ export default {
           this.$router.push({ name: "boardList" });
         });
       }
+    },
+    writeNewComment() {
+      const newcomment = {
+        articleno: this.article.articleno,
+        content: this.newcontent,
+        userid: this.$store.state.memberStore.userInfo.userid,
+        regtime: Date(),
+      };
+      this.writeComment(newcomment);
     },
   },
   // filters: {
