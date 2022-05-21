@@ -1,5 +1,6 @@
 import { sidoList, gugunList, houseList } from "@/api/house.js";
 
+/* eslint-disable */
 const houseStore = {
   namespaced: true,
   state: {
@@ -46,7 +47,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getGugun: ({ commit }, sidoCode) => {
@@ -61,7 +62,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getHouseList: ({ commit }, gugunCode) => {
@@ -84,7 +85,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     detailHouse: ({ commit }, house) => {
@@ -93,5 +94,6 @@ const houseStore = {
     },
   },
 };
+/* eslint-enable */
 
 export default houseStore;

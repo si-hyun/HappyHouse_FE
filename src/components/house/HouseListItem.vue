@@ -1,7 +1,7 @@
 <template>
   <b-row
     class="m-2"
-    @click="selectHouse"
+    @click="[selectHouse(), displayMarkers(house)]"
     @mouseover="colorChange(true)"
     @mouseout="colorChange(false)"
     :class="{ 'mouse-over-bgcolor': isColor }"
@@ -43,6 +43,10 @@ export default {
     },
     colorChange(flag) {
       this.isColor = flag;
+    },
+    displayMarkers(places) {
+      // console.log("HouseListItem.vue - 아파트 선택");
+      this.$emit("displayMarkers", places);
     },
   },
 };
