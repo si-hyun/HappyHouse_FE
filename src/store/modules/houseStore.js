@@ -74,13 +74,35 @@ const houseStore = {
       //     "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
       const params = {
         LAWD_CD: gugunCode,
-        DEAL_YMD: "202110",
+        // DEAL_YMD: "202110",
+        DEAL_YMD: "202204",
         serviceKey: decodeURIComponent(SERVICE_KEY),
       };
       houseList(
         params,
         (response) => {
-          //   console.log(response.data.response.body.items.item);
+          console.log(response.data.response.body);
+          commit("SET_HOUSE_LIST", response.data.response.body.items.item);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getHouseListPage: ({ commit }, gugunCode, pageno) => {
+      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
+      //   const SERVICE_KEY =
+      //     "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
+      const params = {
+        LAWD_CD: gugunCode,
+        DEAL_YMD: "202204",
+        pageNo: pageno,
+        serviceKey: decodeURIComponent(SERVICE_KEY),
+      };
+      houseList(
+        params,
+        (response) => {
+          console.log(response.data.response.body);
           commit("SET_HOUSE_LIST", response.data.response.body.items.item);
         },
         (error) => {

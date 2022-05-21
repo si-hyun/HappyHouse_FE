@@ -4,7 +4,6 @@
       v-for="(house, index) in houses"
       :key="index"
       :house="house"
-      @displayMarkers="displayMarkers"
     />
   </b-container>
   <b-container v-else class="bv-example-row mt-3">
@@ -34,12 +33,7 @@ export default {
     //   return this.$store.state.houses;
     // },
   },
-  methods: {
-    displayMarkers(places) {
-      // console.log("HouseList.vue - 아파트 선택");
-      this.$emit("displayMarkers", places);
-    },
-  },
+  methods: {},
 };
 </script>
 

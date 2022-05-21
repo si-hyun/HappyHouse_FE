@@ -45,20 +45,18 @@ export default {
   //   },
   methods: {
     onClickCategory() {
-      let id = this.id,
-        className = this.className;
-
-      placeOverlay.setMap(null);
-
-      if (className === "on") {
-        currCategory = "";
-        changeCategoryClass();
-        removeCMarker();
-      } else {
-        currCategory = id;
-        changeCategoryClass(this);
-        searchPlaces();
-      }
+      // let id = this.id,
+      //   className = this.className;
+      // placeOverlay.setMap(null);
+      // if (className === "on") {
+      //   currCategory = "";
+      //   changeCategoryClass();
+      //   removeCMarker();
+      // } else {
+      //   currCategory = id;
+      //   changeCategoryClass(this);
+      //   searchPlaces();
+      // }
     },
   },
   mounted() {
@@ -69,7 +67,7 @@ export default {
       children = category.children;
 
     for (let i = 0; i < children.length; i++) {
-      children[i].onclick = onClickCategory;
+      children[i].onclick = this.onClickCategory;
     }
   },
 };

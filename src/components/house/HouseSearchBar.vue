@@ -12,6 +12,7 @@
     </b-col> -->
     <b-col class="sm-3">
       <b-form-select
+        id="sidoSelect"
         v-model="sidoCode"
         :options="sidos"
         @change="gugunList"
@@ -19,9 +20,10 @@
     </b-col>
     <b-col class="sm-3">
       <b-form-select
+        id="gugunSelect"
         v-model="gugunCode"
         :options="guguns"
-        @change="searchApt"
+        @change="[searchApt(), displayMarkers()]"
       ></b-form-select>
     </b-col>
   </b-row>
@@ -38,7 +40,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
     키: 값
     memberStore: memberStore,
     houseStore: houseStore
-  }  
+  }
 */
 const houseStore = "houseStore";
 
@@ -48,6 +50,8 @@ export default {
     return {
       sidoCode: null,
       gugunCode: null,
+      sido: "",
+      gugun: "",
     };
   },
   computed: {
@@ -72,10 +76,23 @@ export default {
       console.log(this.sidoCode);
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
-      if (this.sidoCode) this.getGugun(this.sidoCode);
+      if (this.sidoCode) {
+        this.getGugun(this.sidoCode);
+        let select = document.getElementById("sidoSelect");
+        this.sido = select.options[select.selectedIndex].text;
+        console.log(this.sido);
+      }
     },
     searchApt() {
-      if (this.gugunCode) this.getHouseList(this.gugunCode);
+      if (this.gugunCode) {
+        this.getHouseList(this.gugunCode);
+        let select = document.getElementById("gugunSelect");
+        this.gugun = select.options[select.selectedIndex].text;
+        console.log(this.gugun);
+      }
+    },
+    displayMarkers() {
+      this.$emit("displayMarkers", this.sido, this.gugun);
     },
   },
 };

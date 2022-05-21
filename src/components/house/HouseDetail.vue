@@ -5,7 +5,7 @@
         ><h3>{{ house.아파트 }}</h3></b-col
       >
     </b-row>
-    <b-row class="mb-2 mt-1">
+    <b-row class="mb-1 mt-1">
       <b-col
         ><b-img :src="require('@/assets/apt.png')" fluid-grow></b-img
       ></b-col>
