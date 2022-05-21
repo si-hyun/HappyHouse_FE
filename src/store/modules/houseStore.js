@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { sidoList, gugunList, houseList } from "@/api/house.js";
 
+/* eslint-disable */
 const houseStore = {
   namespaced: true,
   state: {
@@ -94,5 +95,6 @@ const houseStore = {
     },
   },
 };
+/* eslint-enable */
 
 export default houseStore;
