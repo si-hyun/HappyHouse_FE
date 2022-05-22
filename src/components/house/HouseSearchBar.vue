@@ -23,7 +23,7 @@
         id="gugunSelect"
         v-model="gugunCode"
         :options="guguns"
-        @change="[searchApt(), displayMarkers()]"
+        @change="searchApt"
       ></b-form-select>
     </b-col>
   </b-row>
@@ -89,10 +89,9 @@ export default {
         let select = document.getElementById("gugunSelect");
         this.gugun = select.options[select.selectedIndex].text;
         console.log(this.gugun);
+        //houselist를 비동기적으로 가져오기 때문에 1초 기다린 후 지도에 마커 표시
+        setTimeout(() => this.$emit("displayMarkers", this.sido, this.gugun), 1000);
       }
-    },
-    displayMarkers() {
-      this.$emit("displayMarkers", this.sido, this.gugun);
     },
   },
 };

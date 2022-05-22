@@ -38,25 +38,181 @@
 export default {
   name: "KakaoMap",
   data() {
-    return {};
+    return {
+      cmarkers: [],
+      placeOverlay: null,
+      currCategory: "",
+      ps: null,
+    };
   },
-  //   computed: {
-  //     ...mapState("houseStore", ["map"]),
-  //   },
+  props: {
+    map: Object,
+  },
   methods: {
-    onClickCategory() {
-      // let id = this.id,
-      //   className = this.className;
-      // placeOverlay.setMap(null);
-      // if (className === "on") {
-      //   currCategory = "";
-      //   changeCategoryClass();
-      //   removeCMarker();
-      // } else {
-      //   currCategory = id;
-      //   changeCategoryClass(this);
-      //   searchPlaces();
+    init() {
+      //마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이
+      this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
+      // 장소 검색 객체 생성
+      this.ps = new kakao.maps.services.Places(map);
+      kakao.maps.event.addListener(this.map, 'idle', this.searchPlaces);
+    },
+    onClickCategory(id, className) {
+      console.log("id:", id);
+      console.log("className:", className);
+
+      this.placeOverlay.setMap(null);
+
+      if (className === "on") {
+        this.currCategory = "";
+        this.changeCategoryClass();
+        this.removeCMarkers();
+      } else {
+        this.currCategory = id;
+        this.changeCategoryClass(this);
+        this.searchPlaces();
+      }
+    },
+    changeCategoryClass(el) {
+      console.log("changeCategoryClass()");
+      let category = document.getElementById("category"),
+        children = category.children,
+        i;
+
+      for (i = 0; i < children.length; i++) {
+        children[i].className = "";
+      }
+
+      if (el) {
+        el.className = "on";
+      }
+    },
+    removeCMarkers() {
+      console.log("removeCMarkers()");
+      for (let i = 0; i < this.cmarkers.length; i++) {
+        this.cmarkers[i].setMap(null);
+      }
+      this.cmarkers = [];
+    },
+    searchPlaces() {
+      console.log("searchPlaces()");
+      if (!this.currCategory) {
+        return;
+      }
+
+      // 커스텀 오버레이를 숨깁니다
+      this.placeOverlay.setMap(null);
+
+      // 지도에 표시되고 있는 마커를 제거합니다
+      this.removeCMarkers();
+
+      this.ps.categorySearch(this.currCategory, this.placesSearchCB, {
+        useMapBounds: true,
+      });
+    },
+    // 장소검색이 완료됐을 때 호출되는 콜백함수
+    placesSearchCB(data, status, pagination) {
+      console.log("placesSearchCB()");
+      if (status === kakao.maps.services.Status.OK) {
+        // 정상적으로 검색이 완료됐으면 지도에 마커를 표출합니다
+        this.displayPlaces(data);
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
+      } else if (status === kakao.maps.services.Status.ERROR) {
+        // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
+      }
+    },
+    displayPlaces(places) {
+      // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
+      // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
+      let order = document
+        .getElementById(currCategory)
+        .getAttribute("data-order");
+
+      for (let i = 0; i < places.length; i++) {
+        // 마커를 생성하고 지도에 표시합니다
+        let marker = addMarkers(
+          new kakao.maps.LatLng(places[i].y, places[i].x),
+          order
+        );
+
+        // 마커와 검색결과 항목을 클릭 했을 때
+        // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+        (function (marker, place) {
+          kakao.maps.event.addListener(marker, "click", function () {
+            displayPlaceInfo(place);
+          });
+        })(marker, places[i]);
+      }
+
+      // //div에 가까운 순으로 결과 출력
+      // let aptloc = markers[0].getPosition();
+      // //console.log("APT Marker: "+aptloc);
+      // for (let i = 0; i < places.length; i++) {
+      //   let lat = places[i].y;
+      //   let lng = places[i].x;
+      //   places[i].distance = getDistance(
+      //     lat,
+      //     lng,
+      //     aptloc.getLat(),
+      //     aptloc.getLng()
+      //   );
+      //   //console.log("distance: "+places[i].distance+"m");
       // }
+
+      // //거리가 가까운 순으로 정렬
+      // places.sort(function (a, b) {
+      //   if (a.distance < b.distance) return -1;
+      //   else if (a.distance > b.distance) return 1;
+      //   else return 0;
+      // });
+
+      // let table = $("#conviTable");
+      // let div = $("#conviDiv");
+      // let str = `<tr>
+      //  <th>거리</th>
+      // <th>이름</th>
+      // <th>주소</th>
+      // <th>전화번호</th>
+      // </tr>`;
+      // places.forEach(function (data, index) {
+      //   if (index >= 10) return; //10개 까지만 뿌리기
+      //   str += `
+      //  <tr>
+      //  <td>${data.distance}m</td>
+      // <td><a href="${data.place_url}">${data.place_name}</a></td>
+      // <td>${data.road_address_name}</td>
+      // <td>${data.phone}</td>
+      // </tr>
+      //  `;
+      // });
+      // div.empty();
+      // div.append(`<br><br><h3><strong>주변 편의시설 목록</strong></h3>`);
+      // table.empty();
+      // table.append(str);
+    },
+    addMarkers(position, order) {
+      let imageSrc =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
+          spriteOrigin: new kakao.maps.Point(46, order * 36), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+          offset: new kakao.maps.Point(11, 28), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imgOptions
+        ),
+        marker = new kakao.maps.Marker({
+          position: position, // 마커의 위치
+          image: markerImage,
+        });
+
+      marker.setMap(map); // 지도 위에 마커를 표출합니다
+      this.cmarkers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+      return marker;
     },
   },
   mounted() {
@@ -67,8 +223,14 @@ export default {
       children = category.children;
 
     for (let i = 0; i < children.length; i++) {
-      children[i].onclick = this.onClickCategory;
+      // children[i].onclick = this.onClickCategory;
+      children[i].addEventListener("click", () => {
+        this.onClickCategory(children[i].id, children[i].className);
+      });
     }
+
+    //kakao.map을 인식 못해서 0.5초 기다린 후 전역 변수 초기화 진행
+    setTimeout(this.init, 500);
   },
 };
 </script>
