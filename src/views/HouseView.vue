@@ -3,6 +3,7 @@
     <h3 class="underline-orange">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
+    <kakao-map @readyMap="readyMap" :map="map"></kakao-map>
     <b-row>
       <b-col>
         <house-search-bar @displayMarkers="displayMarkers"></house-search-bar>
@@ -17,7 +18,7 @@
       </b-col>
     </b-row>
     <!-- <kakao-map v-bind="map"></kakao-map> -->
-    <kakao-map @readyMap="readyMap" :map="map"></kakao-map>
+    <!-- <kakao-map @readyMap="readyMap" :map="map"></kakao-map> -->
   </b-container>
 </template>
 
