@@ -19,6 +19,14 @@ function changeUserInfo(user, success, fail) {
   api.put(`/user/info`, JSON.stringify(user)).then(success).catch(fail);
 }
 
+function checkUserId(userid, success, fail) {
+  api.put(`/user/${userid}`).then(success).catch(fail);
+}
+
+function signUp(user, success, fail) {
+  api.post(`/user/info`, JSON.stringify(user)).then(success).catch(fail);
+}
+
 // function logout(success, fail)
 
-export { login, findById, deleteUserInfo, changeUserInfo };
+export { login, findById, deleteUserInfo, changeUserInfo, checkUserId, signUp };
