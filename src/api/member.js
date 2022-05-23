@@ -20,7 +20,7 @@ function changeUserInfo(user, success, fail) {
 }
 
 function checkUserId(userid, success, fail) {
-  api.put(`/user/${userid}`).then(success).catch(fail);
+  api.get(`/user/${userid}`).then(success).catch(fail);
 }
 
 function signUp(user, success, fail) {
