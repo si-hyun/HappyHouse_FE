@@ -8,6 +8,7 @@ const houseStore = {
     sidos: [{ value: null, text: "선택하세요" }],
     guguns: [{ value: null, text: "선택하세요" }],
     houses: [],
+    totalCount: 0,
     house: null,
   },
 
@@ -36,6 +37,9 @@ const houseStore = {
     },
     SET_DETAIL_HOUSE: (state, house) => {
       state.house = house;
+    },
+    SET_TOTAL_COUNT: (state, totalCount) => {
+      state.totalCount = totalCount;
     },
   },
 
@@ -82,7 +86,8 @@ const houseStore = {
       houseList(
         params,
         (response) => {
-          // console.log(response.data.response.body);
+          console.log(response.data.response.body);
+          commit("SET_TOTAL_COUNT", response.data.response.body.totalCount);
           commit("SET_HOUSE_LIST", response.data.response.body.items.item);
         },
         (error) => {
@@ -90,7 +95,9 @@ const houseStore = {
         }
       );
     },
-    getHouseListPage: ({ commit }, gugunCode, pageno) => {
+    getHouseListPage: ({ commit }, payload) => {
+      let { gugunCode, pageno } = payload;
+      console.log("pageno", pageno);
       const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
       //   const SERVICE_KEY =
       //     "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
@@ -104,6 +111,7 @@ const houseStore = {
         params,
         (response) => {
           console.log(response.data.response.body);
+          console.log(response.data.response.body.items.item);
           commit("SET_HOUSE_LIST", response.data.response.body.items.item);
         },
         (error) => {

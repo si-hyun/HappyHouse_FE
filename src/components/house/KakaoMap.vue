@@ -80,9 +80,6 @@ export default {
       }
     },
     onClickCategory(id, className) {
-      console.log("id:", id);
-      console.log("className:", className);
-
       this.placeOverlay.setMap(null);
 
       if (className === "on") {
@@ -110,7 +107,6 @@ export default {
       }
     },
     removeCMarkers() {
-      console.log("removeCMarkers()");
       for (let i = 0; i < this.cmarkers.length; i++) {
         this.cmarkers[i].setMap(null);
       }
