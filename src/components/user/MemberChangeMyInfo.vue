@@ -85,6 +85,7 @@ export default {
         userpwd: this.password,
       };
       await this.changeUserInfo(user);
+      alert("비밀번호 수정 완료!");
       this.$router.replace({
         name: "mypage",
       });

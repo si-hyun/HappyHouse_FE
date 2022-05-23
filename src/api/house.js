@@ -16,19 +16,37 @@ function houseList(params, success, fail) {
 }
 
 function registerlikeApt(params, success, fail) {
-  api.post(`/map/likeapt`, { params }).then(success).catch(fail);
+  api.post(`/map/likeapt`, JSON.stringify(params)).then(success).catch(fail);
 }
 
 function regsiterlikeArea(params, success, fail) {
-  api.post(`/map/likearea`, { params }).then(success).catch(fail);
+  api.post(`/map/likearea`, JSON.stringify(params)).then(success).catch(fail);
 }
 
-function likeAptList(params, success, fail) {
-  api.get(`/map/likeapt`, { params }).then(success).catch(fail);
+function likeAptList(userid, success, fail) {
+  api.get(`/map/likeapt/${userid}`).then(success).catch(fail);
 }
 
-function likeAreaList(params, success, fail) {
-  api.get(`/map/likearea`, { params }).then(success).catch(fail);
+function likeAreaList(userid, success, fail) {
+  api.get(`/map/likearea/${userid}`).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, houseList, registerlikeApt, regsiterlikeArea, likeAptList, likeAreaList };
+function deleteLikeApt(aptno, success, fail) {
+  api.delete(`/map/likeapt/${aptno}`).then(success).catch(fail);
+}
+
+function deleteLikeArea(aptno, success, fail) {
+  api.delete(`/map/likeapt/${aptno}`).then(success).catch(fail);
+}
+
+export {
+  sidoList,
+  gugunList,
+  houseList,
+  registerlikeApt,
+  regsiterlikeArea,
+  likeAptList,
+  likeAreaList,
+  deleteLikeApt,
+  deleteLikeArea,
+};
