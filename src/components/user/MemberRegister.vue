@@ -119,6 +119,7 @@ export default {
     },
     SignUp() {
       this.signUp(this.user);
+      alert("회원가입 성공!");
       this.$router.push({ name: "home" });
     },
   },
