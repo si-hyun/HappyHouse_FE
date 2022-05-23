@@ -5,7 +5,9 @@
         ><h3>{{ house.아파트 }}</h3></b-col
       >
       <b-col>
-        <button class="btn btn-primary" type="button" @click="registerLikeApt">관심매물 등록</button>
+        <button class="btn btn-primary" type="button" @click="registerLikeApt">
+          관심매물 등록
+        </button>
       </b-col>
     </b-row>
     <b-row class="mb-1 mt-1">
@@ -71,9 +73,16 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["addLikeApt"]),
-    registerLikeApt(){
+    registerLikeApt() {
       // console.log(this.house);
-      let address = this.cursido + " " + this.curgugun + " " + this.house.도로명 + " " + this.house.아파트;
+      let address =
+        this.cursido +
+        " " +
+        this.curgugun +
+        " " +
+        this.house.도로명 +
+        " " +
+        this.house.아파트;
       // let userid = sessionStorage.getItem();
       let userid = this.$store.state.memberStore.userInfo.userid;
       this.addLikeApt({ address, userid });
