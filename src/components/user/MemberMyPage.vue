@@ -48,7 +48,7 @@
           <hr class="my-4" />
 
           <b-button variant="primary" class="mr-1" @click="ChangeMember"
-            >정보수정</b-button
+            >비밀번호변경</b-button
           >
           <b-button variant="danger" @click="DeleteMember">회원탈퇴</b-button>
         </b-jumbotron>
