@@ -27,6 +27,17 @@ function signUp(user, success, fail) {
   api.post(`/user/info`, JSON.stringify(user)).then(success).catch(fail);
 }
 
+function getAllUser(success, fail) {
+  api.get(`/user/info`).then(success).catch(fail);
+}
 // function logout(success, fail)
 
-export { login, findById, deleteUserInfo, changeUserInfo, checkUserId, signUp };
+export {
+  login,
+  findById,
+  deleteUserInfo,
+  changeUserInfo,
+  checkUserId,
+  signUp,
+  getAllUser,
+};
