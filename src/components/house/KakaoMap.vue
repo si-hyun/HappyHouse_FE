@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative">
     <div id="map"></div>
-    <p><button @click="removeCircles()">모두 지우기</button><br /></p>
+    <!-- <p><button @click="removeCircles()">모두 지우기</button><br /></p> -->
     <ul id="category">
       <li id="BK9" data-order="0">
         <span class="category_bg bank"></span>
@@ -28,6 +28,7 @@
         편의점
       </li>
     </ul>
+    <br />
   </div>
 </template>
 
@@ -54,7 +55,7 @@ export default {
       this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
       // 장소 검색 객체 생성
       this.ps = new kakao.maps.services.Places(map);
-      kakao.maps.event.addListener(this.map, 'idle', this.searchPlaces);
+      kakao.maps.event.addListener(this.map, "idle", this.searchPlaces);
     },
     onClickCategory(id, className) {
       console.log("id:", id);
@@ -105,13 +106,24 @@ export default {
       // 지도에 표시되고 있는 마커를 제거합니다
       this.removeCMarkers();
 
+      // let callback = function (result, status) {
+      //   if (status === kakao.maps.services.Status.OK) {
+      //     console.log(result);
+      //   }
+      // };
+
+      // this.ps.categorySearch(this.currCategory, callback, {
+      //   // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
+      //   location: this.map.getCenter(),
+      // });
+
       this.ps.categorySearch(this.currCategory, this.placesSearchCB, {
-        useMapBounds: true,
+        // useMapBounds: true,
+        location: this.map.getCenter(),
       });
     },
     // 장소검색이 완료됐을 때 호출되는 콜백함수
-    placesSearchCB(data, status, pagination) {
-      console.log("placesSearchCB()");
+    placesSearchCB(data, status) {
       if (status === kakao.maps.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면 지도에 마커를 표출합니다
         this.displayPlaces(data);
@@ -125,12 +137,12 @@ export default {
       // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
       // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
       let order = document
-        .getElementById(currCategory)
+        .getElementById(this.currCategory)
         .getAttribute("data-order");
 
       for (let i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시합니다
-        let marker = addMarkers(
+        let marker = this.addMarkers(
           new kakao.maps.LatLng(places[i].y, places[i].x),
           order
         );
@@ -139,7 +151,7 @@ export default {
         // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
         (function (marker, place) {
           kakao.maps.event.addListener(marker, "click", function () {
-            displayPlaceInfo(place);
+            this.displayPlaceInfo(place);
           });
         })(marker, places[i]);
       }
@@ -209,10 +221,54 @@ export default {
           image: markerImage,
         });
 
-      marker.setMap(map); // 지도 위에 마커를 표출합니다
+      marker.setMap(this.map); // 지도 위에 마커를 표출합니다
       this.cmarkers.push(marker); // 배열에 생성된 마커를 추가합니다
 
       return marker;
+    },
+    // 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수
+    displayPlaceInfo(place) {
+      var content =
+        '<div class="placeinfo">' +
+        '   <a class="title" href="' +
+        place.place_url +
+        '" target="_blank" title="' +
+        place.place_name +
+        '">' +
+        place.place_name +
+        "</a>";
+
+      if (place.road_address_name) {
+        content +=
+          '    <span title="' +
+          place.road_address_name +
+          '">' +
+          place.road_address_name +
+          "</span>" +
+          '  <span class="jibun" title="' +
+          place.address_name +
+          '">(지번 : ' +
+          place.address_name +
+          ")</span>";
+      } else {
+        content +=
+          '    <span title="' +
+          place.address_name +
+          '">' +
+          place.address_name +
+          "</span>";
+      }
+
+      content +=
+        '    <span class="tel">' +
+        place.phone +
+        "</span>" +
+        "</div>" +
+        '<div class="after"></div>';
+
+      contentNode.innerHTML = content;
+      placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+      placeOverlay.setMap(map);
     },
   },
   mounted() {
