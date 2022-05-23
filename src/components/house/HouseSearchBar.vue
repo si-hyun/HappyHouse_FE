@@ -90,7 +90,12 @@ export default {
       "getHouseList",
       "getHouseListPage",
     ]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST"]),
+    ...mapMutations(houseStore, [
+      "CLEAR_SIDO_LIST",
+      "CLEAR_GUGUN_LIST",
+      "SET_CUR_SIDO",
+      "SET_CUR_GUGUN",
+    ]),
     // sidoList() {
     //   this.getSido();
     // },
@@ -102,6 +107,7 @@ export default {
         this.getGugun(this.sidoCode);
         let select = document.getElementById("sidoSelect");
         this.sido = select.options[select.selectedIndex].text;
+        this.SET_CUR_SIDO(this.sido);
         console.log(this.sido);
       }
     },
@@ -111,6 +117,7 @@ export default {
         this.getHouseList(this.gugunCode);
         let select = document.getElementById("gugunSelect");
         this.gugun = select.options[select.selectedIndex].text;
+        this.SET_CUR_GUGUN(this.gugun);
         console.log(this.gugun);
 
         //houselist를 비동기적으로 가져오기 때문에 1초 기다린 후 지도에 마커 표시
@@ -133,7 +140,7 @@ export default {
             //   let li = ul.children[i];
             //   li.classList.remove("active");
             // }
-            ul.children[this.currentPage+1].classList.remove("active");
+            ul.children[this.currentPage + 1].classList.remove("active");
             ul.children[2].classList.add("active");
             this.currentPage = 1;
 

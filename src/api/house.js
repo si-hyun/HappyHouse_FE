@@ -15,4 +15,20 @@ function houseList(params, success, fail) {
   house.get(``, { params: params }).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, houseList };
+function registerlikeApt(params, success, fail) {
+  api.post(`/map/likeapt`, { params }).then(success).catch(fail);
+}
+
+function regsiterlikeArea(params, success, fail) {
+  api.post(`/map/likearea`, { params }).then(success).catch(fail);
+}
+
+function likeAptList(params, success, fail) {
+  api.get(`/map/likeapt`, { params }).then(success).catch(fail);
+}
+
+function likeAreaList(params, success, fail) {
+  api.get(`/map/likearea`, { params }).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, houseList, registerlikeApt, regsiterlikeArea, likeAptList, likeAreaList };

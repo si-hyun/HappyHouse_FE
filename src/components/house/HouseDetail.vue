@@ -4,6 +4,9 @@
       <b-col
         ><h3>{{ house.아파트 }}</h3></b-col
       >
+      <b-col>
+        <button class="btn btn-primary" type="button" @click="registerLikeApt">관심매물 등록</button>
+      </b-col>
     </b-row>
     <b-row class="mb-1 mt-1">
       <b-col
@@ -48,14 +51,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 const houseStore = "houseStore";
 
 export default {
   name: "HouseDetail",
   computed: {
-    ...mapState(houseStore, ["house"]),
+    ...mapState(houseStore, ["house", "cursido", "curgugun"]),
     // house() {
     //   return this.$store.state.house;
     // },
@@ -64,6 +67,16 @@ export default {
     price(value) {
       if (!value) return value;
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+  },
+  methods: {
+    ...mapActions(houseStore, ["addLikeApt"]),
+    registerLikeApt(){
+      // console.log(this.house);
+      let address = this.cursido + " " + this.curgugun + " " + this.house.도로명 + " " + this.house.아파트;
+      // let userid = sessionStorage.getItem();
+      let userid = this.$store.state.memberStore.userInfo.userid;
+      this.addLikeApt({ address, userid });
     },
   },
 };

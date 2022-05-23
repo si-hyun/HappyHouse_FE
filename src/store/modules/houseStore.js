@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { sidoList, gugunList, houseList } from "@/api/house.js";
+import { sidoList, gugunList, houseList, registerlikeApt, regsiterlikeArea, likeAptList, likeAreaList } from "@/api/house.js";
 
 /* eslint-disable */
 const houseStore = {
@@ -7,9 +7,12 @@ const houseStore = {
   state: {
     sidos: [{ value: null, text: "선택하세요" }],
     guguns: [{ value: null, text: "선택하세요" }],
+    cursido: "",
+    curgugun: "",
     houses: [],
     totalCount: 0,
     house: null,
+    likeApts: [],
   },
 
   getters: {},
@@ -41,6 +44,15 @@ const houseStore = {
     SET_TOTAL_COUNT: (state, totalCount) => {
       state.totalCount = totalCount;
     },
+    SET_CUR_SIDO: (state, sido) => {
+      state.cursido = sido;
+    },
+    SET_CUR_GUGUN: (state, gugun) => {
+      state.curgugun = gugun;
+    },
+    SET_LIKE_APTS: (state, apts) => {
+      state.likeApts = apts;
+    }
   },
 
   actions: {
@@ -120,6 +132,15 @@ const houseStore = {
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);
+    },
+    addLikeApt: ({ commit }, apt) => {
+      registerlikeApt(apt,
+        (response) => {
+          console.log(response);
+      }),
+      (error) => {
+        console.log(error);
+      }
     },
   },
 };
