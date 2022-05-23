@@ -44,6 +44,7 @@ export default {
       placeOverlay: null,
       currCategory: "",
       ps: null,
+      contentNode: null,
     };
   },
   props: {
@@ -55,7 +56,28 @@ export default {
       this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
       // 장소 검색 객체 생성
       this.ps = new kakao.maps.services.Places(map);
+      this.contentNode = document.createElement("div");
+      // this.contendNode.className = "placeinfo_wrap";
+      this.addEventHandle(
+        this.contentNode,
+        "mousedown",
+        kakao.maps.event.preventMap
+      );
+      this.addEventHandle(
+        this.contentNode,
+        "touchstart",
+        kakao.maps.event.preventMap
+      );
+      this.placeOverlay.setContent(this.contentNode);
+
       kakao.maps.event.addListener(this.map, "idle", this.searchPlaces);
+    },
+    addEventHandle(target, type, callback) {
+      if (target.addEventListener) {
+        target.addEventListener(type, callback);
+      } else {
+        target.attachEvent("on" + type, callback);
+      }
     },
     onClickCategory(id, className) {
       console.log("id:", id);
@@ -99,23 +121,11 @@ export default {
       if (!this.currCategory) {
         return;
       }
-
       // 커스텀 오버레이를 숨깁니다
       this.placeOverlay.setMap(null);
 
       // 지도에 표시되고 있는 마커를 제거합니다
       this.removeCMarkers();
-
-      // let callback = function (result, status) {
-      //   if (status === kakao.maps.services.Status.OK) {
-      //     console.log(result);
-      //   }
-      // };
-
-      // this.ps.categorySearch(this.currCategory, callback, {
-      //   // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
-      //   location: this.map.getCenter(),
-      // });
 
       this.ps.categorySearch(this.currCategory, this.placesSearchCB, {
         // useMapBounds: true,
@@ -140,6 +150,7 @@ export default {
         .getElementById(this.currCategory)
         .getAttribute("data-order");
 
+      let displayPlaceInfo = this.displayPlaceInfo;
       for (let i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시합니다
         let marker = this.addMarkers(
@@ -151,7 +162,7 @@ export default {
         // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
         (function (marker, place) {
           kakao.maps.event.addListener(marker, "click", function () {
-            this.displayPlaceInfo(place);
+            displayPlaceInfo(place);
           });
         })(marker, places[i]);
       }
@@ -266,9 +277,9 @@ export default {
         "</div>" +
         '<div class="after"></div>';
 
-      contentNode.innerHTML = content;
-      placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
-      placeOverlay.setMap(map);
+      this.contentNode.innerHTML = content;
+      this.placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+      this.placeOverlay.setMap(this.map);
     },
   },
   mounted() {
