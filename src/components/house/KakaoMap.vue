@@ -113,7 +113,7 @@ export default {
       this.cmarkers = [];
     },
     searchPlaces() {
-      console.log("searchPlaces()");
+      // console.log("searchPlaces()");
       if (!this.currCategory) {
         return;
       }
