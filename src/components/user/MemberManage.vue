@@ -7,8 +7,21 @@
     </b-row>
     <b-row>
       <b-col></b-col>
-      <b-col cols="10">
-        <b-table striped hover :items="users"></b-table>
+      <b-col cols="10" class="overflow-auto">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+        <b-table
+          striped
+          hover
+          id="user-table"
+          :items="users"
+          :per-page="perPage"
+          :current-page="currentPage"
+        ></b-table>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -22,6 +35,8 @@ export default {
   name: "MemberManage",
   data() {
     return {
+      perPage: 5,
+      currentPage: 1,
       users: [],
     };
   },
@@ -35,6 +50,11 @@ export default {
       this.$router.replace({
         name: "deletemyinfo",
       });
+    },
+  },
+  computed: {
+    rows() {
+      return this.users.length;
     },
   },
 };
