@@ -32,6 +32,12 @@
             </b-row>
             <b-row>
               <b-col cols="2"></b-col>
+              <b-col cols="2" align-self="end">비밀번호</b-col>
+              <b-form-input type="password" v-model="password"></b-form-input>
+              <b-col cols="2"></b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="2"></b-col>
               <b-col cols="2" align-self="end">이메일</b-col
               ><b-col cols="4" align-self="start">{{ userInfo.email }}</b-col>
               <b-col cols="2"></b-col>
@@ -46,11 +52,9 @@
             </b-row>
           </b-container>
           <hr class="my-4" />
-
           <b-button variant="primary" class="mr-1" @click="ChangeMember"
-            >정보수정</b-button
+            >수정하기</b-button
           >
-          <b-button variant="danger" @click="DeleteMember">회원탈퇴</b-button>
         </b-jumbotron>
       </b-col>
       <b-col></b-col>
@@ -59,25 +63,30 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const memberStore = "memberStore";
 
 export default {
   name: "MemberMyPage",
-  components: {},
+  data() {
+    return {
+      password: "",
+    };
+  },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    ChangeMember() {
+    ...mapActions(memberStore, ["changeUserInfo"]),
+    async ChangeMember() {
+      let user = {
+        userid: this.userInfo.userid,
+        userpwd: this.password,
+      };
+      await this.changeUserInfo(user);
       this.$router.replace({
-        name: "changemyinfo",
-      });
-    },
-    DeleteMember() {
-      this.$router.replace({
-        name: "deletemyinfo",
+        name: "mypage",
       });
     },
   },
