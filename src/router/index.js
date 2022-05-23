@@ -37,6 +37,11 @@ const routes = [
     component: () => import("@/views/MemberView.vue"),
     children: [
       {
+        path: "manage",
+        name: "manage",
+        component: () => import("@/components/user/MemberManage.vue"),
+      },
+      {
         path: "singin",
         name: "signIn",
         component: () => import("@/components/user/MemberLogin.vue"),
@@ -51,6 +56,18 @@ const routes = [
         name: "mypage",
         beforeEnter: onlyAuthUser,
         component: () => import("@/components/user/MemberMyPage.vue"),
+      },
+      {
+        path: "changemyinfo",
+        name: "changemyinfo",
+        beforeEnter: onlyAuthUser,
+        component: () => import("@/components/user/MemberChangeMyInfo.vue"),
+      },
+      {
+        path: "deletemyinfo",
+        name: "deletemyinfo",
+        beforeEnter: onlyAuthUser,
+        component: () => import("@/components/user/MemberDeleteMyInfo.vue"),
       },
     ],
   },

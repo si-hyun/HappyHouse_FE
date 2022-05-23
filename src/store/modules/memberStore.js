@@ -1,6 +1,11 @@
 import jwt_decode from "jwt-decode";
 import { login } from "@/api/member.js";
-import { findById } from "../../api/member";
+import {
+  findById,
+  deleteUserInfo,
+  changeUserInfo,
+  signUp,
+} from "../../api/member";
 
 const memberStore = {
   namespaced: true,
@@ -41,7 +46,7 @@ const memberStore = {
             commit("SET_IS_LOGIN_ERROR", true);
           }
         },
-        () => {},
+        () => {}
       );
     },
     getUserInfo({ commit }, token) {
@@ -57,8 +62,23 @@ const memberStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
+    },
+    deleteUserInfo({ commit }) {
+      deleteUserInfo(this.state.memberStore.userInfo.userid, () => {
+        console.log("회원탈퇴 완료!");
+      });
+    },
+    changeUserInfo({ commit }, user) {
+      changeUserInfo(user, () => {
+        console.log("회원정보수정 완료!");
+      });
+    },
+    signUp({ commit }, user) {
+      signUp(user, () => {
+        console.log("회원가입 완료!");
+      });
     },
   },
 };

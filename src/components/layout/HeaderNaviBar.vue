@@ -68,6 +68,12 @@
             @click.prevent="onClickLogout"
             >로그아웃</b-nav-item
           >
+          <b-nav-item
+            v-if="userInfo.userid === 'admin'"
+            class="link align-self-center"
+            @click.prevent="onClickManage"
+            >회원관리</b-nav-item
+          >
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <b-nav-item-dropdown right>
@@ -110,6 +116,9 @@ export default {
       this.SET_USER_INFO(null);
       sessionStorage.removeItem("access-token");
       if (this.$route.path != "/") this.$router.push({ name: "home" });
+    },
+    onClickManage() {
+      this.$router.push({ name: "manage" });
     },
   },
 };
