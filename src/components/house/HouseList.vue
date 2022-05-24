@@ -46,30 +46,22 @@ export default {
       return this.houses.length;
     },
   },
-<<<<<<< HEAD
-  methods: {
-    ...mapActions("houseStore", ["detailHouse"]),
-    goDetail(item) {
-       this.detailHouse(item);
-    },
-    handleClick(e, page){
-      // console.log(page);
-      let start = 10*(page-1);
-      let end = (this.houses.length < start + 10 ? this.houses.length : start + 10);
-      let houseList = [];
-      for(let i=start; i<end; i++){
-        houseList.push(this.houses[i]);
-      }
-      this.$emit("showMarkers", houseList);
-    }
-=======
-
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {
       this.detailHouse(item);
     },
->>>>>>> e64f5db075030ee3ae26199327c592171f29f5bd
+    handleClick(e, page) {
+      // console.log(page);
+      let start = 10 * (page - 1);
+      let end =
+        this.houses.length < start + 10 ? this.houses.length : start + 10;
+      let houseList = [];
+      for (let i = start; i < end; i++) {
+        houseList.push(this.houses[i]);
+      }
+      this.$emit("showMarkers", houseList);
+    },
   },
 };
 </script>
