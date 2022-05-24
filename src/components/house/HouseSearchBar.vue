@@ -89,6 +89,7 @@ export default {
       "getGugun",
       "getHouseList",
       "getHouseListPage",
+      "getAllHouseList",
     ]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
@@ -115,6 +116,7 @@ export default {
       if (this.gugunCode) {
         // this.getHouseList(this.gugunCode);
         this.getHouseList(this.gugunCode);
+        // this.getAllHouseList(this.gugunCode);
         let select = document.getElementById("gugunSelect");
         this.gugun = select.options[select.selectedIndex].text;
         this.SET_CUR_GUGUN(this.gugun);

@@ -22,6 +22,7 @@ const houseStore = {
     curgugun: "",
     curGugunCode: "",
     houses: [],
+    allhouses: [],
     totalCount: 0,
     house: null,
     likeApts: [],
@@ -84,6 +85,9 @@ const houseStore = {
     SET_CUR_GUGUN_CODE(state, gugunCode) {
       state.curGugunCode = gugunCode;
     },
+    SET_ALL_HOUSES(state, houses) {
+      state.allhouses = houses;
+    }
   },
 
   actions: {
@@ -161,6 +165,25 @@ const houseStore = {
         }
       );
     },
+    getAllHouseList: ({ commit }, gugunCode) => {
+      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
+      const params = {
+        LAWD_CD: gugunCode,
+        DEAL_YMD: "202204",
+        numOfRows: 200,
+        serviceKey: decodeURIComponent(SERVICE_KEY),
+      };
+      houseList(
+        params,
+        (response) => {
+          console.log(response.data.response.body.items.item);
+          commit("SET_ALL_HOUSES", response.data.response.body.items.item);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
     getFilteredHouseList: ({ commit }, payload) => {
       const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
       const params = {
@@ -175,6 +198,7 @@ const houseStore = {
         params,
         (response) => {
           allHouseList = response.data.response.body.items.item;
+          console.log(allHouseList);
         },
         (error) => {
           console.log(error);
