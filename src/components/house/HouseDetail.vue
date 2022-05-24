@@ -5,9 +5,9 @@
         ><h3>{{ house.아파트 }}</h3></b-col
       >
       <b-col>
-        <button class="btn btn-primary" type="button" @click="registerLikeApt">
-          관심매물 등록
-        </button>
+        <b-button variant="outline-danger" @click="registerLikeApt">
+          <b-icon icon="heart"> 관심매물 등록 </b-icon>
+        </b-button>
       </b-col>
     </b-row>
     <b-row class="mb-1 mt-1">

@@ -28,9 +28,9 @@
             ></b-nav-item
           >
           <b-nav-item href="#"
-            ><router-link :to="{ name: 'instagram' }" class="link"
-              ><b-icon icon="instagram" font-scale="1.5"></b-icon>
-              인별그램</router-link
+            ><router-link :to="{ name: 'likeApt' }" class="link"
+              ><b-icon icon="bookmark-heart" font-scale="1.5"></b-icon>
+              관심매물</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
