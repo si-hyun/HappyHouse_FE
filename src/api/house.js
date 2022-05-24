@@ -31,12 +31,12 @@ function likeAreaList(userid, success, fail) {
   api.get(`/map/likearea/${userid}`).then(success).catch(fail);
 }
 
-function deleteLikeApt(aptno, success, fail) {
-  api.delete(`/map/likeapt/${aptno}`).then(success).catch(fail);
+function deleteLikeApt(serialno, success, fail) {
+  api.delete(`/map/likeapt/${serialno}`).then(success).catch(fail);
 }
 
-function deleteLikeArea(aptno, success, fail) {
-  api.delete(`/map/likeapt/${aptno}`).then(success).catch(fail);
+function deleteLikeArea(serialno, success, fail) {
+  api.delete(`/map/likeapt/${serialno}`).then(success).catch(fail);
 }
 
 export {

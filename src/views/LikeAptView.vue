@@ -38,31 +38,31 @@
           </table>
         </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button @click="deleteApt(apt.serialno)" variant="danger"
+          >Delete</b-button
+        >
       </b-card>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import { likeAptList } from "@/api/house.js";
-
+import { mapState, mapActions } from "vuex";
 export default {
   name: "LikeAptView",
-  data() {
-    return {
-      likeApts: [],
-    };
-  },
-  created() {
-    likeAptList(this.$store.state.memberStore.userInfo.userid, (response) => {
-      this.likeApts = response.data;
-      console.log("관심매물 불러오기 성공!");
-    });
-  },
   filters: {
     getAptName(value) {
       return value.split(" ").slice(-1)[0];
+    },
+  },
+  computed: {
+    ...mapState("houseStore", ["likeApts"]),
+  },
+  methods: {
+    ...mapActions("houseStore", ["deleteLikeApt"]),
+    deleteApt(serialno) {
+      console.log("Here");
+      this.deleteLikeApt(serialno);
     },
   },
 };
