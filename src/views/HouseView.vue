@@ -20,7 +20,7 @@
     <br />
     <b-row>
       <b-col cols="6" align="left">
-        <house-list @showMarkers="showMarkers"/>
+        <house-list @showMarkers="showMarkers" />
       </b-col>
       <b-col cols="6">
         <house-detail />
@@ -61,7 +61,13 @@ export default {
     };
   },
   computed: {
-    ...mapState("houseStore", ["sidos", "guguns", "houses", "cursido", "curgugun"]),
+    ...mapState("houseStore", [
+      "sidos",
+      "guguns",
+      "houses",
+      "cursido",
+      "curgugun",
+    ]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -128,7 +134,11 @@ export default {
       let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
-      for (let i = 0; i < (this.houses.length <= 10 ? this.houses.length : 10); i++) {
+      for (
+        let i = 0;
+        i < (this.houses.length <= 10 ? this.houses.length : 10);
+        i++
+      ) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
         let houseName = this.houses[i].아파트;
         // console.log(address);
@@ -158,7 +168,7 @@ export default {
         });
       }
     },
-    showMarkers(houses){
+    showMarkers(houses) {
       console.log("showMarkers():", houses);
       this.geocoder = new kakao.maps.services.Geocoder();
       let map = this.map;
@@ -168,7 +178,8 @@ export default {
       this.removeMarkers();
       this.removeInfoWindows();
       for (let i = 0; i < houses.length; i++) {
-        let address = this.cursido + " " + this.curgugun + " " + houses[i].도로명;
+        let address =
+          this.cursido + " " + this.curgugun + " " + houses[i].도로명;
         let houseName = houses[i].아파트;
         // console.log(address);
         // 주소로 좌표를 검색합니다
@@ -198,8 +209,8 @@ export default {
       }
     },
     addMarker(position, idx) {
-      let imageSrc = require("@/assets/apticon.png"),
-          // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+      let imageSrc = require("@/assets/building.png"),
+        // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
         imgOptions = {
           spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기

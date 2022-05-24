@@ -49,18 +49,19 @@ export default {
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {
-       this.detailHouse(item);
+      this.detailHouse(item);
     },
-    handleClick(e, page){
+    handleClick(e, page) {
       // console.log(page);
-      let start = 10*(page-1);
-      let end = (this.houses.length < start + 10 ? this.houses.length : start + 10);
+      let start = 10 * (page - 1);
+      let end =
+        this.houses.length < start + 10 ? this.houses.length : start + 10;
       let houseList = [];
-      for(let i=start; i<end; i++){
+      for (let i = start; i < end; i++) {
         houseList.push(this.houses[i]);
       }
       this.$emit("showMarkers", houseList);
-    }
+    },
   },
 };
 </script>
