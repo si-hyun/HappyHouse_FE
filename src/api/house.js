@@ -39,6 +39,10 @@ function deleteLikeArea(serialno, success, fail) {
   api.delete(`/map/likeapt/${serialno}`).then(success).catch(fail);
 }
 
+function likeAllAptList(success, fail) {
+  api.get(`/map/likeapt`).then(success).catch(fail);
+}
+
 export {
   sidoList,
   gugunList,
@@ -49,4 +53,5 @@ export {
   likeAreaList,
   deleteLikeApt,
   deleteLikeArea,
+  likeAllAptList,
 };

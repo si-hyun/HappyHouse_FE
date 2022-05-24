@@ -106,6 +106,20 @@ const routes = [
     path: "/likeApt",
     name: "likeApt",
     component: () => import("@/views/LikeAptView.vue"),
+    redirect: "/likeapt/all",
+    children: [
+      {
+        path: "all",
+        name: "AllLikeApt",
+        component: () => import("@/components/house/AllLikeApt.vue"),
+      },
+      {
+        path: "mylist",
+        name: "MyLikeApt",
+        beforeEnter: onlyAuthUser,
+        component: () => import("@/components/house/MyLikeApt.vue"),
+      },
+    ],
   },
   {
     path: "/house",

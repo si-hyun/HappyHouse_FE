@@ -9,6 +9,7 @@ import {
   likeAreaList,
   deleteLikeApt,
   deleteLikeArea,
+  likeAllAptList,
 } from "@/api/house.js";
 
 /* eslint-disable */
@@ -23,6 +24,7 @@ const houseStore = {
     totalCount: 0,
     house: null,
     likeApts: [],
+    allLikeApts: [],
   },
 
   getters: {},
@@ -74,6 +76,9 @@ const houseStore = {
           break;
         }
       }
+    },
+    SET_ALL_LIKE_APT(state, apts) {
+      state.allLikeApts = apts;
     },
   },
 
@@ -207,6 +212,14 @@ const houseStore = {
         commit("DELETE_LIKE_APT", serialno);
         alert("관심 매물 삭제 완료!");
       });
+    },
+    getAllLikeApt({ commit }) {
+      likeAllAptList(
+        (response) => commit("SET_ALL_LIKE_APT", response.data),
+        (error) => {
+          console.log(error);
+        }
+      );
     },
   },
 };
