@@ -89,8 +89,8 @@ export default {
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {
-       this.detailHouse(item);
-    }
+      this.detailHouse(item);
+    },
   },
 };
 </script>
