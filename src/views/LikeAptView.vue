@@ -3,6 +3,20 @@
     <h3 class="underline-green mb-4">
       <b-icon icon="bookmark-heart"></b-icon> 관심매물 Service
     </h3>
+    <div>
+      <b-nav tabs class="mb-4">
+        <b-nav-item
+          :to="{ name: 'AllLikeApt' }"
+          :active="$route.name == 'AllLikeApt'"
+          >전체 매물 순위</b-nav-item
+        >
+        <b-nav-item
+          :to="{ name: 'MyLikeApt' }"
+          :active="$route.name == 'MyLikeApt'"
+          >나의 관심 매물</b-nav-item
+        >
+      </b-nav>
+    </div>
     <router-view></router-view>
   </b-container>
 </template>

@@ -11,7 +11,7 @@
       v-for="(apt, index) in allLikeApts"
       :key="index"
     >
-      <b-badge variant="info">{{ apt.likecnt }}</b-badge>
+      <b-badge variant="danger">{{ apt.likecnt }}</b-badge>
       <b-card-text>
         <table class="table">
           <tbody>
@@ -43,6 +43,9 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "AllLikeApt",
+  created() {
+    this.getAllLikeApt();
+  },
   filters: {
     getAptName(value) {
       return value.split(" ").slice(-1)[0];
@@ -50,6 +53,9 @@ export default {
   },
   computed: {
     ...mapState("houseStore", ["allLikeApts"]),
+  },
+  methods: {
+    ...mapActions("houseStore", ["getAllLikeApt"]),
   },
 };
 </script>

@@ -13,7 +13,6 @@
         >
           <b-icon icon="heart"> 관심매물 등록 </b-icon>
         </b-button>
-        <b-badge variant="danger">{{ likecnt }}</b-badge>
       </b-col>
     </b-row>
     <b-row class="mb-1 mt-1">
@@ -60,16 +59,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
 const houseStore = "houseStore";
-
 export default {
   name: "HouseDetail",
-  data() {
-    return {
-      likecnt: 0,
-    };
-  },
   computed: {
     ...mapState(houseStore, [
       "house",
@@ -99,7 +91,6 @@ export default {
           return;
         }
       }
-
       let userid = this.$store.state.memberStore.userInfo.userid;
       let address =
         this.cursido +
@@ -127,13 +118,6 @@ export default {
       if (apt.serialno === serialno) {
         btn.className = "btn btn-danger";
         console.log("like it!");
-        break;
-      }
-    }
-
-    for (let i = 0; i < this.allLikeApts.length; i++) {
-      if (this.allLikeApts[i].serialno == this.serialno) {
-        this.likecnt = this.allLikeApts[i].likecnt;
         break;
       }
     }
