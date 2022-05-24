@@ -20,6 +20,7 @@ const houseStore = {
     guguns: [{ value: null, text: "선택하세요" }],
     cursido: "",
     curgugun: "",
+    curGugunCode: "",
     houses: [],
     totalCount: 0,
     house: null,
@@ -80,6 +81,9 @@ const houseStore = {
     SET_ALL_LIKE_APT(state, apts) {
       state.allLikeApts = apts;
     },
+    SET_CUR_GUGUN_CODE(state, gugunCode) {
+      state.curGugunCode = gugunCode;
+    }
   },
 
   actions: {
@@ -128,6 +132,7 @@ const houseStore = {
           console.log(response.data.response.body);
           commit("SET_TOTAL_COUNT", response.data.response.body.totalCount);
           commit("SET_HOUSE_LIST", response.data.response.body.items.item);
+          commit("SET_CUR_GUGUN_CODE", gugunCode);
         },
         (error) => {
           console.log(error);
@@ -156,7 +161,7 @@ const houseStore = {
         }
       );
     },
-    getAllHouseList: ({ commit }, gugunCode) => {
+    getAllHouseList: ({ commit }, payload) => {
       const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
       const params = {
         LAWD_CD: gugunCode,
@@ -165,15 +170,17 @@ const houseStore = {
         serviceKey: decodeURIComponent(SERVICE_KEY),
       };
 
-      houseList(
-        params,
-        (response) => {
-          commit("SET_HOUSE_LIST", response.data.response.body.items.item);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      setTimeout(() => {
+        houseList(
+          params,
+          (response) => {
+            commit("SET_HOUSE_LIST", response.data.response.body.items.item);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }, 500);
     },
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출

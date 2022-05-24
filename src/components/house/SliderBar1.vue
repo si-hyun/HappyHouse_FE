@@ -3,9 +3,19 @@
     <div class="form">
       <div>
         <h4>매매가</h4>
-        <i-input v-model="from" :disabled="disabled" style="width: 80px" />
+        <i-input
+          id="pricefrom"
+          v-model="from"
+          :disabled="disabled"
+          style="width: 80px"
+        />
         〜
-        <i-input v-model="to" :disabled="disabled" style="width: 80px" />
+        <i-input
+          id="priceto"
+          v-model="to"
+          :disabled="disabled"
+          style="width: 80px"
+        />
       </div>
       <div>비활성화 <i-switch v-model="disabled" /></div>
     </div>

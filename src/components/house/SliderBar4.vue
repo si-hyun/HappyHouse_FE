@@ -3,9 +3,19 @@
     <div class="form">
       <div>
         <h4>건축연도</h4>
-        <i-input v-model="from" :disabled="disabled" style="width: 80px" />
+        <i-input
+          id="yearfrom"
+          v-model="from"
+          :disabled="disabled"
+          style="width: 80px"
+        />
         〜
-        <i-input v-model="to" :disabled="disabled" style="width: 80px" />
+        <i-input
+          id="yearto"
+          v-model="to"
+          :disabled="disabled"
+          style="width: 80px"
+        />
       </div>
       <div>비활성화 <i-switch v-model="disabled" /></div>
     </div>
@@ -51,7 +61,7 @@ export default {
       disabled: false,
       tooltip: "active", // 'none' | 'always' | 'hover' | 'focus' | 'active'
       tooltipPlacement: "bottom", // 'top' | 'right' | 'bottom' | 'left'
-      formatter: (v) => (v ? `${v.toLocaleString()}만원` : " - "),
+      formatter: (v) => (v ? `${v.toLocaleString()}년` : " - "),
       tooltipStyle: {
         color: "#000",
         backgroundColor: "#fff",
