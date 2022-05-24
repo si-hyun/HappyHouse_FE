@@ -22,7 +22,6 @@ const houseStore = {
     curgugun: "",
     curGugunCode: "",
     houses: [],
-    allhouses: [],
     totalCount: 0,
     house: null,
     likeApts: [],
@@ -86,8 +85,8 @@ const houseStore = {
       state.curGugunCode = gugunCode;
     },
     SET_ALL_HOUSES(state, houses) {
-      state.allhouses = houses;
-    }
+      state.houses = houses;
+    },
   },
 
   actions: {
@@ -184,26 +183,8 @@ const houseStore = {
         }
       );
     },
-    getFilteredHouseList: ({ commit }, payload) => {
-      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
-      const params = {
-        LAWD_CD: payload.curGugunCode,
-        DEAL_YMD: "202204",
-        numOfRows: 200,
-        serviceKey: decodeURIComponent(SERVICE_KEY),
-      };
-
-      let allHouseList = [];
-      houseList(
-        params,
-        (response) => {
-          allHouseList = response.data.response.body.items.item;
-          console.log(allHouseList);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    getFilteredHouseList: ({ state, commit }, payload) => {
+      const allHouseList = state.houses;
 
       setTimeout(() => {
         let filteredList = [];
@@ -211,7 +192,6 @@ const houseStore = {
           let price = parseInt(
             allHouseList[i].거래금액.trim().replace(",", "")
           );
-          console.log("Price:", price);
           if (payload.pricefrom) {
             if (payload.pricefrom > price || price > payload.priceto) {
               continue;

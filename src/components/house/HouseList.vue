@@ -1,8 +1,5 @@
 <template>
-  <b-container
-    v-if="allhouses && allhouses.length != 0"
-    class="bv-example-row mt-3"
-  >
+  <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
     <!-- <div v-if="Array.isArray(houses)">
       <house-list-item
         v-for="(house, index) in houses"
@@ -25,8 +22,13 @@
     ></b-pagination>
     <b-table
       hover
+<<<<<<< HEAD
       id="btable"
       :items="allhouses"
+=======
+      id="user-table"
+      :items="houses"
+>>>>>>> 828f316af063a068d1e473c837d65d3884bde55e
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
@@ -58,12 +60,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["allhouses"]),
+    ...mapState(houseStore, ["houses"]),
     // houses() {
     //   return this.$store.state.houses;
     // },
     rows() {
-      return this.allhouses.length;
+      return this.houses.length;
     },
   },
   mounted() {
