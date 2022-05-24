@@ -56,7 +56,7 @@ export default {
       to: null,
       // value: [0, 5000],
       min: 1,
-      max: 150,
+      max: 50,
       interval: 1,
       disabled: false,
       tooltip: "active", // 'none' | 'always' | 'hover' | 'focus' | 'active'
