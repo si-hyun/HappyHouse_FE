@@ -78,8 +78,16 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["addLikeApt"]),
-    registerLikeApt() {
+    async registerLikeApt() {
       let serialno = this.house.일련번호;
+      for (let i = 0; i < this.likeApts.length; i++) {
+        let apt = this.likeApts[i];
+        if (apt.serialno === serialno) {
+          alert("이미 관심매물로 등록된 매물입니다!");
+          return;
+        }
+      }
+
       let userid = this.$store.state.memberStore.userInfo.userid;
       let address =
         this.cursido +
@@ -92,27 +100,24 @@ export default {
       let floor = this.house.층 + "층";
       let area = this.house.전용면적 + "㎡";
       let price = this.house.거래금액.trim() + "만원";
-      this.addLikeApt({ serialno, userid, address, floor, area, price });
-    },
-    checkUpdated() {
-      let serialno = this.house.일련번호;
-      console.log("serialno:", serialno);
-      for (let i = 0; i < this.likeApts.length; i++) {
-        let apt = this.likeApts[i];
-        console.log("likeApts[i]:", apt.address, apt.serialno);
-        if (apt.serialno === serialno) {
-          let btn = this.$refs.likeBtn;
-          console.log(btn);
-          btn.className = "btn btn-danger";
-          console.log("like it!");
-          break;
-        }
-      }
+      await this.addLikeApt({ serialno, userid, address, floor, area, price });
+      let btn = this.$refs.likeBtn;
+      btn.className = "btn btn-danger";
     },
   },
   updated() {
     console.log("changed!");
-    this.checkUpdated();
+    let serialno = this.house.일련번호;
+    let btn = this.$refs.likeBtn;
+    btn.className = "btn btn-outline-danger";
+    for (let i = 0; i < this.likeApts.length; i++) {
+      let apt = this.likeApts[i];
+      if (apt.serialno === serialno) {
+        btn.className = "btn btn-danger";
+        console.log("like it!");
+        break;
+      }
+    }
   },
 };
 </script>
