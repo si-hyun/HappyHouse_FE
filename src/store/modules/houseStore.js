@@ -1,5 +1,13 @@
 /* eslint-disable */
-import { sidoList, gugunList, houseList, registerlikeApt, regsiterlikeArea, likeAptList, likeAreaList } from "@/api/house.js";
+import {
+  sidoList,
+  gugunList,
+  houseList,
+  registerlikeApt,
+  regsiterlikeArea,
+  likeAptList,
+  likeAreaList,
+} from "@/api/house.js";
 
 /* eslint-disable */
 const houseStore = {
@@ -52,7 +60,7 @@ const houseStore = {
     },
     SET_LIKE_APTS: (state, apts) => {
       state.likeApts = apts;
-    }
+    },
   },
 
   actions: {
@@ -154,13 +162,13 @@ const houseStore = {
       console.log(house);
     },
     addLikeApt: ({ commit }, apt) => {
-      registerlikeApt(apt,
-        (response) => {
-          console.log(response);
+      registerlikeApt(apt, (response) => {
+        //console.log(response.data);
+        alert("관심 매물 등록 성공!");
       }),
-      (error) => {
-        console.log(error);
-      }
+        (error) => {
+          console.log(error);
+        };
     },
   },
 };
