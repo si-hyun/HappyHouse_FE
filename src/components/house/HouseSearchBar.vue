@@ -116,12 +116,8 @@ export default {
     searchApt() {
       if (this.gugunCode) {
         // this.getHouseList(this.gugunCode);
-<<<<<<< HEAD
         this.getAllHouseList(this.gugunCode);
-=======
-        this.getHouseList(this.gugunCode);
         // this.getAllHouseList(this.gugunCode);
->>>>>>> 57d2922032fee779ecd44978698c567b9b358ae8
         let select = document.getElementById("gugunSelect");
         this.gugun = select.options[select.selectedIndex].text;
         this.SET_CUR_GUGUN(this.gugun);

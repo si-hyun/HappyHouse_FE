@@ -1,5 +1,8 @@
 <template>
-  <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
+  <b-container
+    v-if="allhouses && allhouses.length != 0"
+    class="bv-example-row mt-3"
+  >
     <!-- <div v-if="Array.isArray(houses)">
       <house-list-item
         v-for="(house, index) in houses"
@@ -12,18 +15,19 @@
         :house="houses"
       />
     </div> -->
-    houses: {{ allhouses }}
     <b-pagination
+      class="mb-3"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
+      :limit="10"
       aria-controls="my-table"
     ></b-pagination>
     <b-table
-      striped
       hover
       id="user-table"
       :items="allhouses"
+      :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
     ></b-table>
@@ -48,8 +52,9 @@ export default {
   },
   data() {
     return {
-      perPage: 5,
+      perPage: 10,
       currentPage: 1,
+      fields: ["일련번호", "아파트"],
     };
   },
   computed: {
@@ -57,13 +62,11 @@ export default {
     // houses() {
     //   return this.$store.state.houses;
     // },
-  },
-  methods: {},
-  computed: {
     rows() {
       return this.allhouses.length;
     },
   },
+  methods: {},
 };
 </script>
 
