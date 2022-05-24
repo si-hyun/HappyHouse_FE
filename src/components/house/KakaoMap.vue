@@ -56,8 +56,11 @@ export default {
       this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
       // 장소 검색 객체 생성
       this.ps = new kakao.maps.services.Places(map);
-      this.contentNode = document.createElement("div");
-      // this.contendNode.className = "placeinfo_wrap";
+
+      let div = document.createElement("div");
+      this.contentNode = div;
+      div.className = "placeinfo_wrap";
+
       this.addEventHandle(
         this.contentNode,
         "mousedown",
@@ -68,8 +71,9 @@ export default {
         "touchstart",
         kakao.maps.event.preventMap
       );
-      this.placeOverlay.setContent(this.contentNode);
 
+      this.placeOverlay.setContent(this.contentNode);
+      this.addCategoryClickEvent();
       kakao.maps.event.addListener(this.map, "idle", this.searchPlaces);
     },
     addEventHandle(target, type, callback) {
@@ -79,7 +83,19 @@ export default {
         target.attachEvent("on" + type, callback);
       }
     },
+    addCategoryClickEvent() {
+      // 각 카테고리에 클릭 이벤트 등록
+      let category = document.getElementById("category"),
+        children = category.children;
+
+      for (let i = 0; i < children.length; i++) {
+        children[i].addEventListener("click", () => {
+          this.onClickCategory(children[i].id, children[i].className);
+        });
+      }
+    },
     onClickCategory(id, className) {
+      console.log("onClickCategory()");
       this.placeOverlay.setMap(null);
 
       if (className === "on") {
@@ -88,7 +104,7 @@ export default {
         this.removeCMarkers();
       } else {
         this.currCategory = id;
-        this.changeCategoryClass(this);
+        this.changeCategoryClass(document.getElementById(id));
         this.searchPlaces();
       }
     },
@@ -281,16 +297,15 @@ export default {
   mounted() {
     this.$emit("readyMap");
 
-    // 각 카테고리에 클릭 이벤트 등록
-    let category = document.getElementById("category"),
-      children = category.children;
+    // // 각 카테고리에 클릭 이벤트 등록
+    // let category = document.getElementById("category"),
+    //   children = category.children;
 
-    for (let i = 0; i < children.length; i++) {
-      // children[i].onclick = this.onClickCategory;
-      children[i].addEventListener("click", () => {
-        this.onClickCategory(children[i].id, children[i].className);
-      });
-    }
+    // for (let i = 0; i < children.length; i++) {
+    //   children[i].addEventListener("click", () => {
+    //     this.onClickCategory(children[i].id, children[i].className);
+    //   });
+    // }
 
     //kakao.map을 인식 못해서 0.5초 기다린 후 전역 변수 초기화 진행
     setTimeout(this.init, 500);
@@ -367,9 +382,9 @@ export default {
 #category li .store {
   background-position: -10px -180px;
 }
-#category li.on .category_bg {
+/* #category li.on .category_bg {
   background-position-x: -36px;
-}
+} */
 .placeinfo_wrap {
   position: absolute;
   bottom: 28px;
