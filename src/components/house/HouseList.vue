@@ -22,13 +22,8 @@
     ></b-pagination>
     <b-table
       hover
-<<<<<<< HEAD
-      id="btable"
-      :items="allhouses"
-=======
-      id="user-table"
+      ref="btable"
       :items="houses"
->>>>>>> 828f316af063a068d1e473c837d65d3884bde55e
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
@@ -69,17 +64,19 @@ export default {
     },
   },
   mounted() {
-    let tbody = document.getElementById("btable").children[1];
-    let allhouses = this.allhosues;
-    console.log(allhouses);
+    // let tbody = document.getElementById("btable").children[1];
+    let tbody = this.$refs.btable;
+    let houses = this.houses;
+    console.log(tbody);
+    console.log(houses);
     for(let i=0; i<tbody.children.length; i++){
       let tr = tbody.children[i];
       tr.addEventListener("click", () => {
         let house = null;
-        for(let k=0; k<allhouses.length; k++){
-          if(allhouses[k].일련번호 === tr.children[0].textContent){
-            console.log(allhouses[k].일련번호);
-            house = allhouses[k];
+        for(let k=0; k<houses.length; k++){
+          if(houses[k].일련번호 === tr.children[0].textContent){
+            console.log(houses[k].일련번호);
+            house = houses[k];
             break;
           }
         }
