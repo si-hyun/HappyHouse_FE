@@ -5,7 +5,12 @@
         ><h3>{{ house.아파트 }}</h3></b-col
       >
       <b-col>
-        <b-button id="likeBtn" variant="outline-danger" @click="registerLikeApt">
+        <b-button
+          id="likeBtn"
+          ref="likeBtn"
+          variant="outline-danger"
+          @click="registerLikeApt"
+        >
           <b-icon icon="heart"> 관심매물 등록 </b-icon>
         </b-button>
       </b-col>
@@ -60,7 +65,7 @@ const houseStore = "houseStore";
 export default {
   name: "HouseDetail",
   computed: {
-    ...mapState(houseStore, ["house", "cursido", "curgugun"]),
+    ...mapState(houseStore, ["house", "cursido", "curgugun", "likeApts"]),
     // house() {
     //   return this.$store.state.house;
     // },
@@ -89,9 +94,25 @@ export default {
       let price = this.house.거래금액.trim() + "만원";
       this.addLikeApt({ serialno, userid, address, floor, area, price });
     },
+    checkUpdated() {
+      let serialno = this.house.일련번호;
+      console.log("serialno:", serialno);
+      for (let i = 0; i < this.likeApts.length; i++) {
+        let apt = this.likeApts[i];
+        console.log("likeApts[i]:", apt.address, apt.serialno);
+        if (apt.serialno === serialno) {
+          let btn = this.$refs.likeBtn;
+          console.log(btn);
+          btn.className = "btn btn-danger";
+          console.log("like it!");
+          break;
+        }
+      }
+    },
   },
-  mounted() {
-    
+  updated() {
+    console.log("changed!");
+    this.checkUpdated();
   },
 };
 </script>
