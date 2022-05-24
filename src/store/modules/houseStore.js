@@ -22,6 +22,7 @@ const houseStore = {
     curgugun: "",
     curGugunCode: "",
     houses: [],
+    allhouses:[],
     totalCount: 0,
     allhouses: null,
     house: null,
