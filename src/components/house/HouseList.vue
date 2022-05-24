@@ -1,17 +1,5 @@
 <template>
   <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
-    <!-- <div v-if="Array.isArray(houses)">
-      <house-list-item
-        v-for="(house, index) in houses"
-        :key="index"
-        :house="house"
-      />
-    </div>
-    <div v-else>
-      <house-list-item
-        :house="houses"
-      />
-    </div> -->
     <b-pagination
       class="mb-3"
       v-model="currentPage"
@@ -39,16 +27,12 @@
 </template>
 
 <script>
-//import HouseListItem from "@/components/house/HouseListItem.vue";
 import { mapActions, mapState } from "vuex";
 
 const houseStore = "houseStore";
 
 export default {
   name: "HouseList",
-  components: {
-    //HouseListItem,
-  },
   data() {
     return {
       perPage: 10,
@@ -58,13 +42,11 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["houses"]),
-    // houses() {
-    //   return this.$store.state.houses;
-    // },
     rows() {
       return this.houses.length;
     },
   },
+<<<<<<< HEAD
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {
@@ -80,6 +62,14 @@ export default {
       }
       this.$emit("showMarkers", houseList);
     }
+=======
+
+  methods: {
+    ...mapActions("houseStore", ["detailHouse"]),
+    goDetail(item) {
+      this.detailHouse(item);
+    },
+>>>>>>> e64f5db075030ee3ae26199327c592171f29f5bd
   },
 };
 </script>
