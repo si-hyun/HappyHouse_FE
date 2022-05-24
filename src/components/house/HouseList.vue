@@ -46,7 +46,6 @@ export default {
       return this.houses.length;
     },
   },
-<<<<<<< HEAD
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {
@@ -62,14 +61,6 @@ export default {
       }
       this.$emit("showMarkers", houseList);
     }
-=======
-
-  methods: {
-    ...mapActions("houseStore", ["detailHouse"]),
-    goDetail(item) {
-      this.detailHouse(item);
-    },
->>>>>>> e64f5db075030ee3ae26199327c592171f29f5bd
   },
 };
 </script>
