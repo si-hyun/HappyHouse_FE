@@ -3,7 +3,14 @@
     <h3 class="underline-orange">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
-    <kakao-map @readyMap="readyMap" :map="map"></kakao-map>
+    <b-row>
+      <b-col cols="4">
+        <slider-bar></slider-bar>
+      </b-col>
+      <b-col cols="8">
+        <kakao-map @readyMap="readyMap" :map="map"></kakao-map>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col>
         <house-search-bar @displayMarkers="displayMarkers"></house-search-bar>
@@ -27,6 +34,7 @@ import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
 import KakaoMap from "@/components/house/KakaoMap.vue";
+import SliderBar from "@/components/house/SliderBar.vue"
 
 import { mapState, mapActions, mapMutations } from "vuex";
 
@@ -37,6 +45,7 @@ export default {
     HouseList,
     HouseDetail,
     KakaoMap,
+    SliderBar
   },
   data() {
     return {

@@ -137,9 +137,29 @@ const houseStore = {
         }
       );
     },
+    getAllHouseList: ({ commit }, gugunCode) => {
+      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
+      const params = {
+        LAWD_CD: gugunCode,
+        DEAL_YMD: "202204",
+        numOfRows: 200,
+        serviceKey: decodeURIComponent(SERVICE_KEY),
+      };
+      
+      houseList(
+        params,
+        (response) => {
+          commit("SET_HOUSE_LIST", response.data.response.body.items.item);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);
+      console.log(house);
     },
     addLikeApt: ({ commit }, apt) => {
       registerlikeApt(apt, (response) => {
