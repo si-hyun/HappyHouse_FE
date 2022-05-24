@@ -234,7 +234,7 @@ const houseStore = {
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);
-      console.log(house);
+      console.log("detailHouse", house);
     },
     addLikeApt: ({ commit }, apt) => {
       console.log(apt);

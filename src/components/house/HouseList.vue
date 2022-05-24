@@ -22,8 +22,13 @@
     ></b-pagination>
     <b-table
       hover
+<<<<<<< HEAD
+      id="btable"
+      :items="allhouses"
+=======
       id="user-table"
       :items="houses"
+>>>>>>> 828f316af063a068d1e473c837d65d3884bde55e
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
@@ -38,7 +43,7 @@
 
 <script>
 //import HouseListItem from "@/components/house/HouseListItem.vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const houseStore = "houseStore";
 
@@ -63,7 +68,28 @@ export default {
       return this.houses.length;
     },
   },
-  methods: {},
+  mounted() {
+    let tbody = document.getElementById("btable").children[1];
+    let allhouses = this.allhosues;
+    console.log(allhouses);
+    for(let i=0; i<tbody.children.length; i++){
+      let tr = tbody.children[i];
+      tr.addEventListener("click", () => {
+        let house = null;
+        for(let k=0; k<allhouses.length; k++){
+          if(allhouses[k].일련번호 === tr.children[0].textContent){
+            console.log(allhouses[k].일련번호);
+            house = allhouses[k];
+            break;
+          }
+        }
+        this.detailHouse(house);
+      });
+    }
+  },
+  methods: {
+    ...mapActions("houseStore", ["detailHouse"]),
+  },
 };
 </script>
 
