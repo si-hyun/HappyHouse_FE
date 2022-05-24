@@ -7,6 +7,8 @@ import {
   regsiterlikeArea,
   likeAptList,
   likeAreaList,
+  deleteLikeApt,
+  deleteLikeArea,
 } from "@/api/house.js";
 
 /* eslint-disable */
@@ -61,6 +63,17 @@ const houseStore = {
     SET_LIKE_APTS: (state, apts) => {
       state.likeApts = apts;
       // console.log(state.likeApts);
+    },
+    ADD_LIKE_APT(state, apt) {
+      state.likeApts.push(apt);
+    },
+    DELETE_LIKE_APT(state, serialno) {
+      for (let i = 0; i < state.likeApts.length; i++) {
+        if (state.likeApts[i].serialno === serialno) {
+          state.likeApts.splice(i, 1);
+          break;
+        }
+      }
     },
   },
 
@@ -168,6 +181,7 @@ const houseStore = {
         apt,
         (response) => {
           //console.log(response.data);
+          commit("ADD_LIKE_APT", apt);
           alert("관심 매물 등록 성공!");
         },
         (error) => {
@@ -185,6 +199,14 @@ const houseStore = {
           console.log(error);
         }
       );
+    },
+    deleteLikeApt({ commit }, serialno) {
+      console.log("Here is deleteLikeApt");
+      console.log(serialno);
+      deleteLikeApt(serialno, () => {
+        commit("DELETE_LIKE_APT", serialno);
+        alert("관심 매물 삭제 완료!");
+      });
     },
   },
 };

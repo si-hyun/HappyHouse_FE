@@ -1,45 +1,69 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center">
+  <b-container fluid class="text-center bv-example-row mt-3 mx-4">
     <h3 class="underline-green mb-4">
       <b-icon icon="bookmark-heart"></b-icon> 관심매물 Service
     </h3>
-    <b-row class="d-flex justify-content-between">
+    <b-row class="d-flex justify-content-around">
       <!-- img-src="https://picsum.photos/600/300/?image=25"
         img-alt="Image"
         img-top -->
       <b-card
-        title="Card Title"
+        :title="apt.address | getAptName"
         tag="article"
-        style="max-width: 20rem"
+        style="width: 30rem"
         class="mb-4"
         v-for="(apt, index) in likeApts"
         :key="index"
       >
         <b-card-text>
-          {{ apt.address }}
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>가격</th>
+                <td>{{ apt.price }}</td>
+              </tr>
+              <tr>
+                <th>면적</th>
+                <td>{{ apt.area }}</td>
+              </tr>
+              <tr>
+                <th>층수</th>
+                <td>{{ apt.floor }}</td>
+              </tr>
+              <tr>
+                <th>주소</th>
+                <td>{{ apt.address }}</td>
+              </tr>
+            </tbody>
+          </table>
         </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button @click="deleteApt(apt.serialno)" variant="danger"
+          >Delete</b-button
+        >
       </b-card>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import { likeAptList } from "@/api/house.js";
-
+import { mapState, mapActions } from "vuex";
 export default {
   name: "LikeAptView",
-  data() {
-    return {
-      likeApts: [],
-    };
+  filters: {
+    getAptName(value) {
+      return value.split(" ").slice(-1)[0];
+    },
   },
-  created() {
-    likeAptList(this.$store.state.memberStore.userInfo.userid, (response) => {
-      this.likeApts = response.data;
-      console.log("관심매물 불러오기 성공!");
-    });
+  computed: {
+    ...mapState("houseStore", ["likeApts"]),
+  },
+  methods: {
+    ...mapActions("houseStore", ["deleteLikeApt"]),
+    deleteApt(serialno) {
+      console.log("Here");
+      this.deleteLikeApt(serialno);
+    },
   },
 };
 </script>
