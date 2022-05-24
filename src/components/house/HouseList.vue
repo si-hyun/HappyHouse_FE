@@ -1,17 +1,5 @@
 <template>
   <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
-    <!-- <div v-if="Array.isArray(houses)">
-      <house-list-item
-        v-for="(house, index) in houses"
-        :key="index"
-        :house="house"
-      />
-    </div>
-    <div v-else>
-      <house-list-item
-        :house="houses"
-      />
-    </div> -->
     <b-pagination
       class="mb-3"
       v-model="currentPage"
@@ -38,16 +26,12 @@
 </template>
 
 <script>
-//import HouseListItem from "@/components/house/HouseListItem.vue";
 import { mapActions, mapState } from "vuex";
 
 const houseStore = "houseStore";
 
 export default {
   name: "HouseList",
-  components: {
-    //HouseListItem,
-  },
   data() {
     return {
       perPage: 10,
@@ -57,35 +41,11 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["houses"]),
-    // houses() {
-    //   return this.$store.state.houses;
-    // },
     rows() {
       return this.houses.length;
     },
   },
-  // mounted() {
-  //   // let tbody = document.getElementById("btable").children[1];
-  //   let tbody = this.$refs.btable.$children[1];
-  //   let houses = this.houses;
-  //   console.log(tbody);
-  //   console.log(houses);
-  //   for(let i=0; i<tbody.$children.length; i++){
-  //     let tr = tbody.$children[i];
-  //     console.log(tr.$children[0], tr.$children[1]);
-  //     tr.addEventListener("click", () => {
-  //       let house = null;
-  //       for(let k=0; k<houses.length; k++){
-  //         if(houses[k].일련번호 === tr.children[0].textContent){
-  //           console.log(houses[k].일련번호);
-  //           house = houses[k];
-  //           break;
-  //         }
-  //       }
-  //       this.detailHouse(house);
-  //     });
-  //   }
-  // },
+
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {

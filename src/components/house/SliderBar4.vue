@@ -2,7 +2,7 @@
   <div>
     <div class="form">
       <div>
-        <h4>건축연도</h4>
+        <h4>건축년도</h4>
         <i-input
           id="yearfrom"
           v-model="from"

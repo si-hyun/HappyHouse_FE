@@ -1,6 +1,6 @@
 <template>
   <b-container v-if="house" class="bv-example-row">
-    <b-row>
+    <b-row class="mb-2">
       <b-col
         ><h3>{{ house.아파트 }}</h3></b-col
       >
@@ -15,11 +15,13 @@
         </b-button>
       </b-col>
     </b-row>
+    <!--
     <b-row class="mb-1 mt-1">
       <b-col
         ><b-img :src="require('@/assets/apt.png')" fluid-grow></b-img
       ></b-col>
     </b-row>
+    !-->
     <b-row>
       <b-col>
         <b-alert show variant="secondary"
@@ -29,14 +31,19 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-alert show variant="primary"
-          >아파트 이름 : {{ house.아파트 }}
-        </b-alert>
+        <b-alert show variant="danger"
+          >매매가 :
+          {{
+            (parseInt(house.거래금액.replace(",", "")) * 10000) | price
+          }}원</b-alert
+        >
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-alert show variant="info">법정동 : {{ house.법정동 }} </b-alert>
+        <b-alert show variant="primary"
+          >전용면적 : {{ house.전용면적 }}
+        </b-alert>
       </b-col>
     </b-row>
     <b-row>
@@ -46,12 +53,7 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-alert show variant="danger"
-          >거래금액 :
-          {{
-            (parseInt(house.거래금액.replace(",", "")) * 10000) | price
-          }}원</b-alert
-        >
+        <b-alert show variant="info">건축년도 : {{ house.건축년도 }} </b-alert>
       </b-col>
     </b-row>
   </b-container>
