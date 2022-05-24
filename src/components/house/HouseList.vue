@@ -1,8 +1,5 @@
 <template>
-  <b-container
-    v-if="allhouses && allhouses.length != 0"
-    class="bv-example-row mt-3"
-  >
+  <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
     <!-- <div v-if="Array.isArray(houses)">
       <house-list-item
         v-for="(house, index) in houses"
@@ -26,7 +23,7 @@
     <b-table
       hover
       id="user-table"
-      :items="allhouses"
+      :items="houses"
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
@@ -58,12 +55,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["allhouses"]),
+    ...mapState(houseStore, ["houses"]),
     // houses() {
     //   return this.$store.state.houses;
     // },
     rows() {
-      return this.allhouses.length;
+      return this.houses.length;
     },
   },
   methods: {},
