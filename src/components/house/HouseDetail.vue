@@ -74,7 +74,8 @@ export default {
   methods: {
     ...mapActions(houseStore, ["addLikeApt"]),
     registerLikeApt() {
-      // console.log(this.house);
+      let serialno = this.house.일련번호;
+      let userid = this.$store.state.memberStore.userInfo.userid;
       let address =
         this.cursido +
         " " +
@@ -83,9 +84,10 @@ export default {
         this.house.도로명 +
         " " +
         this.house.아파트;
-      // let userid = sessionStorage.getItem();
-      let userid = this.$store.state.memberStore.userInfo.userid;
-      this.addLikeApt({ address, userid });
+      let floor = this.house.층 + "층";
+      let area = this.house.전용면적 + "㎡";
+      let price = this.house.거래금액.trim() + "만원";
+      this.addLikeApt({ serialno, userid, address, floor, area, price });
     },
   },
 };
