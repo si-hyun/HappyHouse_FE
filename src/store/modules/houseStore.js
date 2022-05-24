@@ -184,11 +184,12 @@ const houseStore = {
       setTimeout(() => {
         let filteredList = [];
         for (let i = 0; i < allHouseList.length; i++) {
+          let price = parseInt(
+            allHouseList[i].거래금액.trim().replace(",", "")
+          );
+          console.log("Price:", price);
           if (payload.pricefrom) {
-            if (
-              payload.pricefrom > allHouseList[i].거래금액.trim() ||
-              allHouseList[i].거래금액.trim() > payload.priceto
-            ) {
+            if (payload.pricefrom > price || price > payload.priceto) {
               continue;
             }
           }

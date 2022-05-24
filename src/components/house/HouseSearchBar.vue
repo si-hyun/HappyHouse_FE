@@ -29,12 +29,12 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-pagination-nav
+      <!-- <b-pagination-nav
         limit="10"
         id="pageNav"
         :number-of-pages="numOfPage"
         base-url="#"
-      ></b-pagination-nav>
+      ></b-pagination-nav> -->
       <!-- <nav id="pageNav" aria-label="Pagination">
         <ul id="pageUl" class="pagination b-pagination"></ul> -->
       <!-- <ul id="pageUl"></ul> -->
@@ -88,6 +88,7 @@ export default {
       "getSido",
       "getGugun",
       "getHouseList",
+      "getAllHouseList",
       "getHouseListPage",
     ]),
     ...mapMutations(houseStore, [
@@ -114,7 +115,7 @@ export default {
     searchApt() {
       if (this.gugunCode) {
         // this.getHouseList(this.gugunCode);
-        this.getHouseList(this.gugunCode);
+        this.getAllHouseList(this.gugunCode);
         let select = document.getElementById("gugunSelect");
         this.gugun = select.options[select.selectedIndex].text;
         this.SET_CUR_GUGUN(this.gugun);
@@ -124,51 +125,51 @@ export default {
         setTimeout(() => {
           this.$emit("displayMarkers", this.sido, this.gugun);
 
-          let nav = document.getElementById("pageNav");
-          let ul = nav.firstChild;
-          let val = this.totalCount / this.perPage;
-          this.numOfPage = Math.floor(
-            this.totalCount % this.perPage == 0 ? val : val + 1
-          );
-          console.log("totalCount:", this.totalCount);
-          console.log("numOfPage", this.numOfPage);
+          // let nav = document.getElementById("pageNav");
+          // let ul = nav.firstChild;
+          // let val = this.totalCount / this.perPage;
+          // this.numOfPage = Math.floor(
+          //   this.totalCount % this.perPage == 0 ? val : val + 1
+          // );
+          // console.log("totalCount:", this.totalCount);
+          // console.log("numOfPage", this.numOfPage);
 
-          setTimeout(() => {
-            //페이지 선택 표시 초기화
-            // for (let i = 2; i < ul.children.length - 2; i++) {
-            //   console.log(ul.children[i].textContent);
-            //   let li = ul.children[i];
-            //   li.classList.remove("active");
-            // }
-            ul.children[this.currentPage + 1].classList.remove("active");
-            ul.children[2].classList.add("active");
-            this.currentPage = 1;
+          // setTimeout(() => {
+          //   //페이지 선택 표시 초기화
+          //   // for (let i = 2; i < ul.children.length - 2; i++) {
+          //   //   console.log(ul.children[i].textContent);
+          //   //   let li = ul.children[i];
+          //   //   li.classList.remove("active");
+          //   // }
+          //   ul.children[this.currentPage + 1].classList.remove("active");
+          //   ul.children[2].classList.add("active");
+          //   this.currentPage = 1;
 
-            for (let i = 2; i < ul.children.length - 2; i++) {
-              let li = ul.children[i];
-              li.addEventListener("click", () => {
-                this.searchAptPage(i - 1);
-              });
-            }
-          }, 500);
+          //   for (let i = 2; i < ul.children.length - 2; i++) {
+          //     let li = ul.children[i];
+          //     li.addEventListener("click", () => {
+          //       this.searchAptPage(i - 1);
+          //     });
+          //   }
+          // }, 500);
         }, 1000);
       }
     },
-    searchAptPage(pageno) {
-      console.log("searchAptPage()");
-      if (this.gugunCode) {
-        this.getHouseListPage({ gugunCode: this.gugunCode, pageno });
-        let nav = document.getElementById("pageNav");
-        let ul = nav.firstChild;
-        ul.children[this.currentPage + 1].classList.remove("active");
-        this.currentPage = pageno;
+    // searchAptPage(pageno) {
+    //   console.log("searchAptPage()");
+    //   if (this.gugunCode) {
+    //     this.getHouseListPage({ gugunCode: this.gugunCode, pageno });
+    //     let nav = document.getElementById("pageNav");
+    //     let ul = nav.firstChild;
+    //     ul.children[this.currentPage + 1].classList.remove("active");
+    //     this.currentPage = pageno;
 
-        //houselist를 비동기적으로 가져오기 때문에 1초 기다린 후 지도에 마커 표시
-        setTimeout(() => {
-          this.$emit("displayMarkers", this.sido, this.gugun);
-        }, 1000);
-      }
-    },
+    //     //houselist를 비동기적으로 가져오기 때문에 1초 기다린 후 지도에 마커 표시
+    //     setTimeout(() => {
+    //       this.$emit("displayMarkers", this.sido, this.gugun);
+    //     }, 1000);
+    //   }
+    // },
   },
 };
 </script>
