@@ -4,6 +4,11 @@
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
     <b-row>
+      <b-col>
+        <house-search-bar @displayMarkers="displayMarkers"></house-search-bar>
+      </b-col>
+    </b-row>
+    <b-row>
       <b-col cols="4">
         <!-- <slider-bar1></slider-bar1> -->
         <slider-view></slider-view>
@@ -14,13 +19,8 @@
     </b-row>
     <br />
     <b-row>
-      <b-col>
-        <house-search-bar @displayMarkers="displayMarkers"></house-search-bar>
-      </b-col>
-    </b-row>
-    <b-row>
       <b-col cols="6" align="left">
-        <house-list />
+        <house-list @showMarkers="showMarkers"/>
       </b-col>
       <b-col cols="6">
         <house-detail />
@@ -37,6 +37,7 @@ import HouseList from "@/components/house/HouseList.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
 import KakaoMap from "@/components/house/KakaoMap.vue";
 import SliderView from "@/components/house/SliderView.vue";
+// import aptIcon from "@/assets/apticon.png";
 
 import { mapState, mapActions, mapMutations } from "vuex";
 
@@ -60,7 +61,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("houseStore", ["sidos", "guguns", "houses"]),
+    ...mapState("houseStore", ["sidos", "guguns", "houses", "cursido", "curgugun"]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -127,7 +128,7 @@ export default {
       let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
-      for (let i = 0; i < this.houses.length; i++) {
+      for (let i = 0; i < (this.houses.length <= 10 ? this.houses.length : 10); i++) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
         let houseName = this.houses[i].아파트;
         // console.log(address);
@@ -157,9 +158,48 @@ export default {
         });
       }
     },
+    showMarkers(houses){
+      console.log("showMarkers():", houses);
+      this.geocoder = new kakao.maps.services.Geocoder();
+      let map = this.map;
+      let bounds = new kakao.maps.LatLngBounds();
+      let addMarker = this.addMarker;
+      let putInfoWindow = this.putInfoWindow;
+      this.removeMarkers();
+      this.removeInfoWindows();
+      for (let i = 0; i < houses.length; i++) {
+        let address = this.cursido + " " + this.curgugun + " " + houses[i].도로명;
+        let houseName = houses[i].아파트;
+        // console.log(address);
+        // 주소로 좌표를 검색합니다
+        this.geocoder.addressSearch(address, function (result, status) {
+          // console.log(status);
+          // 정상적으로 검색이 완료됐으면
+          if (status === kakao.maps.services.Status.OK) {
+            // console.log(houseName);
+            let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            // let marker = new kakao.maps.Marker({
+            //   map: map,
+            //   position: coords,
+            // });
+            let marker = addMarker(coords, i);
+            bounds.extend(coords);
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            let infowindow = new kakao.maps.InfoWindow({
+              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            });
+            putInfoWindow(infowindow);
+            infowindow.open(map, marker);
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setBounds(bounds);
+          } else console.log(status);
+        });
+      }
+    },
     addMarker(position, idx) {
-      let imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+      let imageSrc = require("@/assets/apticon.png"),
+          // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
         imgOptions = {
           spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기

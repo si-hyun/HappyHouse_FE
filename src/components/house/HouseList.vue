@@ -18,6 +18,7 @@
       :total-rows="rows"
       :per-page="perPage"
       :limit="10"
+      @page-click="handleClick"
       aria-controls="my-table"
     ></b-pagination>
     <b-table
@@ -64,32 +65,20 @@ export default {
       return this.houses.length;
     },
   },
-  // mounted() {
-  //   // let tbody = document.getElementById("btable").children[1];
-  //   let tbody = this.$refs.btable.$children[1];
-  //   let houses = this.houses;
-  //   console.log(tbody);
-  //   console.log(houses);
-  //   for(let i=0; i<tbody.$children.length; i++){
-  //     let tr = tbody.$children[i];
-  //     console.log(tr.$children[0], tr.$children[1]);
-  //     tr.addEventListener("click", () => {
-  //       let house = null;
-  //       for(let k=0; k<houses.length; k++){
-  //         if(houses[k].일련번호 === tr.children[0].textContent){
-  //           console.log(houses[k].일련번호);
-  //           house = houses[k];
-  //           break;
-  //         }
-  //       }
-  //       this.detailHouse(house);
-  //     });
-  //   }
-  // },
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
     goDetail(item) {
        this.detailHouse(item);
+    },
+    handleClick(e, page){
+      // console.log(page);
+      let start = 10*(page-1);
+      let end = (this.houses.length < start + 10 ? this.houses.length : start + 10);
+      let houseList = [];
+      for(let i=start; i<end; i++){
+        houseList.push(this.houses[i]);
+      }
+      this.$emit("showMarkers", houseList);
     }
   },
 };
