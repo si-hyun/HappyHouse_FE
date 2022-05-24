@@ -22,11 +22,12 @@
     ></b-pagination>
     <b-table
       hover
-      ref="btable"
+      id="user-table"
       :items="houses"
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
+      @row-clicked="goDetail"
     ></b-table>
   </b-container>
   <b-container v-else class="bv-example-row mt-3">
@@ -63,29 +64,33 @@ export default {
       return this.houses.length;
     },
   },
-  mounted() {
-    // let tbody = document.getElementById("btable").children[1];
-    let tbody = this.$refs.btable;
-    let houses = this.houses;
-    console.log(tbody);
-    console.log(houses);
-    for(let i=0; i<tbody.children.length; i++){
-      let tr = tbody.children[i];
-      tr.addEventListener("click", () => {
-        let house = null;
-        for(let k=0; k<houses.length; k++){
-          if(houses[k].일련번호 === tr.children[0].textContent){
-            console.log(houses[k].일련번호);
-            house = houses[k];
-            break;
-          }
-        }
-        this.detailHouse(house);
-      });
-    }
-  },
+  // mounted() {
+  //   // let tbody = document.getElementById("btable").children[1];
+  //   let tbody = this.$refs.btable.$children[1];
+  //   let houses = this.houses;
+  //   console.log(tbody);
+  //   console.log(houses);
+  //   for(let i=0; i<tbody.$children.length; i++){
+  //     let tr = tbody.$children[i];
+  //     console.log(tr.$children[0], tr.$children[1]);
+  //     tr.addEventListener("click", () => {
+  //       let house = null;
+  //       for(let k=0; k<houses.length; k++){
+  //         if(houses[k].일련번호 === tr.children[0].textContent){
+  //           console.log(houses[k].일련번호);
+  //           house = houses[k];
+  //           break;
+  //         }
+  //       }
+  //       this.detailHouse(house);
+  //     });
+  //   }
+  // },
   methods: {
     ...mapActions("houseStore", ["detailHouse"]),
+    goDetail(item) {
+       this.detailHouse(item);
+    }
   },
 };
 </script>

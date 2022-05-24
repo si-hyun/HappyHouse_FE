@@ -22,6 +22,7 @@ const houseStore = {
     curgugun: "",
     curGugunCode: "",
     houses: [],
+    allhouses:[],
     totalCount: 0,
     house: null,
     likeApts: [],
@@ -86,6 +87,7 @@ const houseStore = {
     },
     SET_ALL_HOUSES(state, houses) {
       state.houses = houses;
+      state.allhouses = houses;
     },
   },
 
@@ -184,7 +186,7 @@ const houseStore = {
       );
     },
     getFilteredHouseList: ({ state, commit }, payload) => {
-      const allHouseList = state.houses;
+      const allHouseList = state.allhouses;
 
       setTimeout(() => {
         let filteredList = [];
