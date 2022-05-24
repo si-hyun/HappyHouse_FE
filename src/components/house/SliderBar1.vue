@@ -3,11 +3,11 @@
     <div class="form">
       <div>
         <h4>매매가</h4>
-        <i-input v-model="from" :disabled="disabled" style="width: 60px" />
+        <i-input v-model="from" :disabled="disabled" style="width: 80px" />
         〜
-        <i-input v-model="to" :disabled="disabled" style="width: 60px" />
+        <i-input v-model="to" :disabled="disabled" style="width: 80px" />
       </div>
-      <div>disabled: <i-switch v-model="disabled" /></div>
+      <div>비활성화 <i-switch v-model="disabled" /></div>
     </div>
     <VueSlider
       v-model="value"
@@ -24,7 +24,7 @@
       :rail-style="railStyle"
       :process-style="processStyle"
     />
-    <button class="btn btn-outline-primary">검색</button>
+    <br />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ import "vue-slider-component/theme/antd.css"; // default.css or antd.css or mate
 import { Input, Switch } from "view-design";
 
 export default {
-  name: "Slider",
+  name: "Slider1",
   components: {
     VueSlider,
     "i-input": Input,
@@ -53,21 +53,21 @@ export default {
       tooltipPlacement: "bottom", // 'top' | 'right' | 'bottom' | 'left'
       formatter: (v) => (v ? `${v.toLocaleString()}만원` : " - "),
       tooltipStyle: {
-        color: "#f00",
-        backgroundColor: "#333",
-        border: "2px solid #f00",
+        color: "#000",
+        backgroundColor: "#fff",
+        border: "2px solid #1E90FF",
       },
       dotSize: 20,
       dotStyle: {
-        backgroundColor: "#333",
-        borderColor: "#f00",
+        backgroundColor: "#1E90FF",
+        // borderColor: "#f00",
       },
       railStyle: {
         border: "1px solid #cfcfcf",
         backgroundColor: "#fff",
       },
       processStyle: {
-        border: "2px solid #f00",
+        border: "2px solid #1E90FF",
         backgroundColor: "#333",
       },
     };
