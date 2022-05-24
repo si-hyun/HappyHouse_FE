@@ -74,12 +74,14 @@ export default {
   },
   methods: {
     ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions("houseStore", ["getLikeApt"]),
     async confirm() {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
       if (this.isLogin) {
         await this.getUserInfo(token);
         this.$router.push({ name: "home" });
+        this.getLikeApt(this.user.userid);
       }
     },
     movePage() {

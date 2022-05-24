@@ -5,7 +5,7 @@
         ><h3>{{ house.아파트 }}</h3></b-col
       >
       <b-col>
-        <b-button variant="outline-danger" @click="registerLikeApt">
+        <b-button id="likeBtn" variant="outline-danger" @click="registerLikeApt">
           <b-icon icon="heart"> 관심매물 등록 </b-icon>
         </b-button>
       </b-col>
@@ -89,6 +89,9 @@ export default {
       let price = this.house.거래금액.trim() + "만원";
       this.addLikeApt({ serialno, userid, address, floor, area, price });
     },
+  },
+  mounted() {
+    
   },
 };
 </script>

@@ -60,6 +60,7 @@ const houseStore = {
     },
     SET_LIKE_APTS: (state, apts) => {
       state.likeApts = apts;
+      // console.log(state.likeApts);
     },
   },
 
@@ -145,7 +146,7 @@ const houseStore = {
         numOfRows: 200,
         serviceKey: decodeURIComponent(SERVICE_KEY),
       };
-      
+
       houseList(
         params,
         (response) => {
@@ -162,13 +163,28 @@ const houseStore = {
       console.log(house);
     },
     addLikeApt: ({ commit }, apt) => {
-      registerlikeApt(apt, (response) => {
-        //console.log(response.data);
-        alert("관심 매물 등록 성공!");
-      }),
+      console.log(apt);
+      registerlikeApt(
+        apt,
+        (response) => {
+          //console.log(response.data);
+          alert("관심 매물 등록 성공!");
+        },
         (error) => {
           console.log(error);
-        };
+        }
+      );
+    },
+    getLikeApt: ({ commit }, userid) => {
+      likeAptList(
+        userid,
+        (response) => {
+          commit("SET_LIKE_APTS", response.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     },
   },
 };
