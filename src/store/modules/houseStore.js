@@ -161,28 +161,67 @@ const houseStore = {
         }
       );
     },
-    getAllHouseList: ({ commit }, payload) => {
+    getFilteredHouseList: ({ commit }, payload) => {
       const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
       const params = {
-        LAWD_CD: state.curGugunCode,
+        LAWD_CD: payload.curGugunCode,
         DEAL_YMD: "202204",
         numOfRows: 200,
         serviceKey: decodeURIComponent(SERVICE_KEY),
       };
 
-      let houseList = [];
+      let allHouseList = [];
       houseList(
         params,
         (response) => {
-          houseList = response.data.response.body.items.item;
+          allHouseList = response.data.response.body.items.item;
         },
         (error) => {
           console.log(error);
         }
       );
+
       setTimeout(() => {
-        
-        commit("SET_HOUSE_LIST", houseList);
+        let filteredList = [];
+        for (let i = 0; i < allHouseList.length; i++) {
+          if (payload.pricefrom) {
+            if (
+              payload.pricefrom > allHouseList[i].거래금액.trim() ||
+              allHouseList[i].거래금액.trim() > payload.priceto
+            ) {
+              continue;
+            }
+          }
+
+          if (payload.areafrom) {
+            if (
+              payload.areafrom > allHouseList[i].전용면적 ||
+              allHouseList[i].전용면적 > payload.areato
+            ) {
+              continue;
+            }
+          }
+
+          if (payload.floorfrom) {
+            if (
+              payload.floorfrom > allHouseList[i].층 ||
+              allHouseList[i].층 > payload.floorto
+            ) {
+              continue;
+            }
+          }
+
+          if (payload.yearfrom) {
+            if (
+              payload.yearfrom > allHouseList[i].건축년도 ||
+              allHouseList[i].건축년도 > payload.yearto
+            ) {
+              continue;
+            }
+          }
+          filteredList.push(allHouseList[i]);
+        }
+        commit("SET_HOUSE_LIST", filteredList);
       }, 500);
     },
     detailHouse: ({ commit }, house) => {

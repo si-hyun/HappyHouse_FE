@@ -13,7 +13,7 @@ import SliderBar1 from "@/components/house/SliderBar1.vue";
 import SliderBar2 from "@/components/house/SliderBar2.vue";
 import SliderBar3 from "@/components/house/SliderBar3.vue";
 import SliderBar4 from "@/components/house/SliderBar4.vue";
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "SliderView",
@@ -32,6 +32,9 @@ export default {
       yearto: 0,
     };
   },
+  computed: {
+    ...mapState("houseStore", ["curGugunCode"]),
+  },
   components: {
     SliderBar1,
     SliderBar2,
@@ -39,7 +42,7 @@ export default {
     SliderBar4,
   },
   methods: {
-    ...mapMutations[("houseStore", "getAllHouseList")],
+    ...mapActions("houseStore", ["getFilteredHouseList"]),
     btnClick() {
       let pricefrom = document.getElementById("pricefrom").children[1].value;
       let priceto = document.getElementById("priceto").children[1].value;
@@ -72,7 +75,7 @@ export default {
       str = className.split(" ");
       if (str[str.length - 1] === "ivu-input-wrapper-disabled") yearfrom = null;
 
-      this.getAllHouseList({
+      this.getFilteredHouseList({
         pricefrom,
         priceto,
         areafrom,
@@ -81,6 +84,7 @@ export default {
         floorto,
         yearfrom,
         yearto,
+        curGugunCode: this.curGugunCode,
       });
     },
   },
