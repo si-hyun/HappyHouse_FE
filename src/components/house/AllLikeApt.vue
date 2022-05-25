@@ -11,7 +11,8 @@
       v-for="(apt, index) in allLikeApts"
       :key="index"
     >
-      <b-badge variant="danger">{{ apt.likecnt }}</b-badge>
+      <b-icon icon="heart-fill" variant="danger" style="width: 20px; height: 20px;"></b-icon>
+      <h6 style="display: inline-block"><b-badge variant="danger">{{ apt.likecnt }}</b-badge></h6>
       <b-card-text>
         <table class="table">
           <tbody>

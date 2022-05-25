@@ -13,7 +13,7 @@ import SliderBar1 from "@/components/house/SliderBar1.vue";
 import SliderBar2 from "@/components/house/SliderBar2.vue";
 import SliderBar3 from "@/components/house/SliderBar3.vue";
 import SliderBar4 from "@/components/house/SliderBar4.vue";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "SliderView",
