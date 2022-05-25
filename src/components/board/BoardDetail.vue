@@ -30,8 +30,7 @@
     <b-row class="mb-1">
       <b-col>
         <b-card
-          :header-html="`<h3>${article.articleno}.
-          ${article.subject} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
+          :header-html="`<h3>${article.subject}</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
           class="mb-2"
           border-variant="dark"
           no-body
@@ -43,15 +42,17 @@
       </b-col>
     </b-row>
     <b-input-group prepend="댓글 추가" class="mb-5">
-      <b-form-textarea v-model="newcontent"></b-form-textarea>
+      <b-form-textarea
+        v-model="newcontent"
+        ref="inputcomment"
+      ></b-form-textarea>
       <b-button @click="writeNewComment" variant="primary">추가</b-button>
     </b-input-group>
     <!-- 하위 component인 ListRow에 데이터 전달(props) -->
     <board-comment-item
-      v-for="comment in this.comments"
+      v-for="(comment, index) in this.comments"
       :comment="comment"
-      :key="comment.commentno"
-      v-bind="comment"
+      :key="index"
     />
   </b-container>
 </template>
@@ -116,13 +117,20 @@ export default {
       }
     },
     writeNewComment() {
-      const newcomment = {
-        articleno: this.article.articleno,
-        content: this.newcontent,
-        userid: this.$store.state.memberStore.userInfo.userid,
-        regtime: Date(),
-      };
-      this.writeComment(newcomment);
+      if (this.newcontent) {
+        const newcomment = {
+          articleno: this.article.articleno,
+          content: this.newcontent,
+          userid: this.$store.state.memberStore.userInfo.userid,
+          regtime: Date(),
+        };
+        this.writeComment(newcomment);
+        this.newcontent = "";
+        //this.$refs.inputcomment.focus();
+      } else {
+        alert("한 글자 이상 입력해주세요!");
+        this.$refs.inputcomment.focus();
+      }
     },
   },
   // filters: {

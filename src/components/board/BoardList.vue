@@ -30,6 +30,9 @@
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      sort-icon-right
       @row-clicked="goBoardItem"
     ></b-table>
     <b-pagination
@@ -59,7 +62,14 @@ export default {
   name: "BoardList",
   data() {
     return {
-      fields: ["subject", "userid", "hit", "regtime"],
+      sortBy: "age",
+      sortDesc: false,
+      fields: [
+        { subject: "제목" },
+        { userid: "글쓴이" },
+        { key: "hit", label: "조회수", sortable: true },
+        { regtime: "등록시간" },
+      ],
       perPage: 10,
       currentPage: 1,
       articles: [],
