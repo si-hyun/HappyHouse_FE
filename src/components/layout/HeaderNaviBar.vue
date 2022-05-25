@@ -4,9 +4,9 @@
       <b-navbar-brand href="#">
         <router-link to="/">
           <img
-            src="@/assets/ssafy_logo.png"
+            src="@/assets/happyhouse.png"
             class="d-inline-block align-middle"
-            width="100px"
+            width="50px"
             alt="ssafy"
           />
         </router-link>
@@ -39,12 +39,12 @@
               아파트정보</router-link
             ></b-nav-item
           >
-          <b-nav-item href="#"
+          <!-- <b-nav-item href="#"
             ><router-link :to="{ name: 'todo' }" class="link"
               ><b-icon icon="calendar-check" font-scale="1.5"></b-icon>
               TodoList</router-link
             ></b-nav-item
-          >
+          > -->
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="userInfo">
