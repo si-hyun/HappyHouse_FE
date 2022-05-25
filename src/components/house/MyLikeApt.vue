@@ -34,8 +34,14 @@
         </table>
       </b-card-text>
 
-      <b-button @click="deleteApt(apt.serialno)" variant="danger"
-        >Delete</b-button
+      <b-button @click="goMap(apt.serialno)" variant="outline-primary"
+        >지도에서 보기</b-button
+      >
+      <b-button
+        @click="deleteApt(apt.serialno)"
+        variant="outline-danger"
+        class="mx-2"
+        >삭제</b-button
       >
     </b-card>
   </b-row>
