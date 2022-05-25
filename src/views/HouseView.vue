@@ -165,7 +165,8 @@ export default {
             //   map: map,
             //   position: coords,
             // });
-            let marker = addMarker(coords, i);
+            let imgsrc = require("@/assets/building.png");
+            let marker = addMarker(coords, i, imgsrc);
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             let infowindow = new kakao.maps.InfoWindow({
@@ -205,7 +206,8 @@ export default {
             //   map: map,
             //   position: coords,
             // });
-            let marker = addMarker(coords, i);
+            let imgsrc = require("@/assets/building.png");
+            let marker = addMarker(coords, i, imgsrc);
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             let infowindow = new kakao.maps.InfoWindow({
@@ -219,8 +221,8 @@ export default {
         });
       }
     },
-    addMarker(position, idx) {
-      let imageSrc = require("@/assets/building.png"),
+    addMarker(position, idx, imgsrc) {
+      let imageSrc = imgsrc,
         // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
         imgOptions = {
@@ -308,7 +310,8 @@ export default {
             //   map: map,
             //   position: coords,
             // });
-            let marker = addMarker(coords, i);
+            let imgsrc = require("@/assets/heart.png");
+            let marker = addMarker(coords, i, imgsrc);
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             let infowindow = new kakao.maps.InfoWindow({
