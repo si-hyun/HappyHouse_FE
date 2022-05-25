@@ -2,7 +2,8 @@
   <div>
     <div class="form">
       <div>
-        <h4>전용면적</h4>
+        <h6 style="float: left">전용면적</h6>
+        <br />
         <i-input
           id="areafrom"
           v-model="from"

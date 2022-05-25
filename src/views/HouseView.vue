@@ -3,16 +3,20 @@
     <h3 class="underline-hotpink">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
+    <br><br>
     <b-row>
       <b-col>
-        <house-search-bar @displayMarkers="displayMarkers"></house-search-bar>
+        <h5 style="display: inline-block;"><strong>지역별 매물 검색</strong></h5>&nbsp&nbsp&nbsp&nbsp
+        <house-search-bar style="display: inline-block;"" @displayMarkers="displayMarkers"></house-search-bar>
       </b-col>
       <b-col
         ><b-button variant="success" @click="displayLikeApts(likeApts)"
+          style="margin-top: 20px;"
           >관심 매물 보기</b-button
         ></b-col
       >
     </b-row>
+    <br>
     <b-row>
       <b-col cols="4">
         <!-- <slider-bar1></slider-bar1> -->

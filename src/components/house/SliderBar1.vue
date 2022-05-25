@@ -2,7 +2,8 @@
   <div>
     <div class="form">
       <div>
-        <h4>매매가</h4>
+        <h6 style="float: left;">매매가</h6>
+        <br>
         <i-input
           id="pricefrom"
           v-model="from"

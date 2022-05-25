@@ -2,7 +2,8 @@
   <div>
     <div class="form">
       <div>
-        <h4>층수</h4>
+        <h6 style="float: left">층수</h6>
+        <br />
         <i-input
           id="floorfrom"
           v-model="from"

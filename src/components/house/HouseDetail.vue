@@ -1,10 +1,10 @@
 <template>
   <b-container v-if="house" class="bv-example-row">
     <b-row class="mb-2">
-      <b-col
+      <b-col cols="9"
         ><h3>{{ house.아파트 }}</h3></b-col
       >
-      <b-col>
+      <b-col cols="3">
         <b-button
           id="likeBtn"
           ref="likeBtn"
