@@ -7,6 +7,11 @@
       <b-col>
         <house-search-bar @displayMarkers="displayMarkers"></house-search-bar>
       </b-col>
+      <b-col
+        ><b-button variant="success" @click="displayLikeApts(likeApts)"
+          >관심 매물 보기</b-button
+        ></b-col
+      >
     </b-row>
     <b-row>
       <b-col cols="4">
@@ -67,6 +72,8 @@ export default {
       "houses",
       "cursido",
       "curgugun",
+      "likeApts",
+      "wantseeapt",
     ]),
     // sidos() {
     //   return this.$store.state.sidos;
@@ -74,7 +81,11 @@ export default {
   },
   methods: {
     ...mapActions("houseStore", ["getSido", "getGugun", "getHouseList"]),
-    ...mapMutations("houseStore", ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST"]),
+    ...mapMutations("houseStore", [
+      "CLEAR_SIDO_LIST",
+      "CLEAR_GUGUN_LIST",
+      "CLEAR_WANT_SEE_HOUSE",
+    ]),
     init() {
       this.geocoder = new kakao.maps.services.Geocoder();
     },
@@ -273,9 +284,53 @@ export default {
     //   // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     //   this.map.setBounds(bounds);
     // },
+    displayLikeApts(apts) {
+      console.log("displayLikeApts():", apts);
+      this.geocoder = new kakao.maps.services.Geocoder();
+      let map = this.map;
+      let bounds = new kakao.maps.LatLngBounds();
+      let addMarker = this.addMarker;
+      let putInfoWindow = this.putInfoWindow;
+      this.removeMarkers();
+      this.removeInfoWindows();
+      for (let i = 0; i < apts.length; i++) {
+        let houseName = apts[i].address.split(" ").pop();
+        // console.log(address);
+        // 주소로 좌표를 검색합니다
+        this.geocoder.addressSearch(apts[i].address, function (result, status) {
+          // console.log(status);
+          // 정상적으로 검색이 완료됐으면
+          if (status === kakao.maps.services.Status.OK) {
+            // console.log(houseName);
+            let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            // let marker = new kakao.maps.Marker({
+            //   map: map,
+            //   position: coords,
+            // });
+            let marker = addMarker(coords, i);
+            bounds.extend(coords);
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            let infowindow = new kakao.maps.InfoWindow({
+              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            });
+            putInfoWindow(infowindow);
+            infowindow.open(map, marker);
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setBounds(bounds);
+          } else console.log(status);
+        });
+      }
+    },
   },
   mounted() {
     setTimeout(this.init, 500);
+    if (this.wantseeapt) {
+      let arrhouse = [];
+      arrhouse.push(this.wantseeapt);
+      this.displayLikeApts(arrhouse);
+    }
+    this.CLEAR_WANT_SEE_HOUSE();
   },
 };
 </script>

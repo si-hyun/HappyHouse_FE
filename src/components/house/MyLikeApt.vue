@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "MyLikeApt",
@@ -61,10 +61,14 @@ export default {
     ...mapState("houseStore", ["likeApts"]),
   },
   methods: {
+    ...mapMutations("houseStore", ["SET_WANT_SEE_APT"]),
     ...mapActions("houseStore", ["deleteLikeApt"]),
     deleteApt(serialno) {
-      console.log("Here");
       this.deleteLikeApt(serialno);
+    },
+    goMap(serialno) {
+      this.SET_WANT_SEE_APT(serialno);
+      this.$router.push({ name: "house" });
     },
   },
 };

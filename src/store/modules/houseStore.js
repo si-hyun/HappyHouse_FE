@@ -22,12 +22,13 @@ const houseStore = {
     curgugun: "",
     curGugunCode: "",
     houses: [],
-    allhouses:[],
+    allhouses: [],
     totalCount: 0,
     allhouses: null,
     house: null,
     likeApts: [],
     allLikeApts: [],
+    wantseeapt: null,
   },
 
   getters: {},
@@ -89,6 +90,18 @@ const houseStore = {
     SET_ALL_HOUSES(state, houses) {
       state.houses = houses;
       state.allhouses = houses;
+    },
+    SET_WANT_SEE_APT(state, serialno) {
+      for (let i = 0; i < state.likeApts.length; i++) {
+        if (state.likeApts[i].serialno === serialno) {
+          state.wantseeapt = state.likeApts[i];
+          break;
+        }
+      }
+    },
+    CLEAR_WANT_SEE_HOUSE(state) {
+      state.wantseeapt = null;
+      console.log("wantseeapt clear");
     },
   },
 
