@@ -18,6 +18,18 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "myfont";
+  src: url("@/assets/fonts/KOTRA_GOTHIC.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+.App {
+  text-align: center;
+  font-size: 50px;
+  font-family: myfont;
+}
+
 a {
   text-decoration: none;
 }
