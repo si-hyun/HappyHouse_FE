@@ -57,7 +57,7 @@
 </template>
 <script>
 // import moment from "moment";
-import { getArticle, deleteArticle } from "@/api/board";
+import { getArticle, deleteArticle, updateHit } from "@/api/board";
 import BoardCommentItem from "@/components/board/item/BoardCommentItem";
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -86,12 +86,14 @@ export default {
       this.$route.params.articleno,
       (response) => {
         this.article = response.data;
+        if (this.article.userid !== this.userInfo.userid) {
+          updateHit(this.article.articleno);
+        }
       },
       (error) => {
         console.log("삭제시 에러발생!!", error);
       }
     );
-    console.log(this.$store);
     this.getComment(this.$route.params.articleno);
   },
   methods: {
