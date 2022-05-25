@@ -2,7 +2,7 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>글보기</h3></b-alert>
+        <b-alert show><h3>상세보기</h3></b-alert>
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -11,14 +11,19 @@
       </b-col>
       <b-col class="text-right">
         <b-button
+          v-if="article.userid === userInfo.userid"
           variant="outline-info"
           size="sm"
           @click="moveModifyArticle"
           class="mr-2"
-          >글수정</b-button
+          >수정</b-button
         >
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle"
-          >글삭제</b-button
+        <b-button
+          v-if="article.userid === userInfo.userid"
+          variant="outline-danger"
+          size="sm"
+          @click="deleteArticle"
+          >삭제</b-button
         >
       </b-col>
     </b-row>
@@ -54,7 +59,7 @@
 // import moment from "moment";
 import { getArticle, deleteArticle } from "@/api/board";
 import BoardCommentItem from "@/components/board/item/BoardCommentItem";
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "BoardDetail",
@@ -68,6 +73,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("memberStore", ["userInfo"]),
     ...mapGetters("commentStore", ["comments"]),
     message() {
       if (this.article.content)
@@ -83,7 +89,7 @@ export default {
       },
       (error) => {
         console.log("삭제시 에러발생!!", error);
-      },
+      }
     );
     console.log(this.$store);
     this.getComment(this.$route.params.articleno);
