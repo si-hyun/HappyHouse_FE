@@ -1,26 +1,27 @@
 <template>
   <div>
-    <b-card no-body class="overflow-hidden">
+    <b-container class="bv-example-row">
       <b-row>
-        <b-col>
-          <p class="mt-0 mb-1">
-            {{ comment.userid }} {{ comment.regtime | dateFormat }}
-          </p>
-        </b-col>
-        <b-col>
-          <h5 class="mb-0">
-            {{ comment.content }}
-          </h5>
-        </b-col>
-        <b-col class="right-align">
-          <b-button
-            v-if="checkUserInfo.userid === comment.userid"
-            @click="deleteNowComment"
-            >삭제</b-button
+        <b-col
+          cols="11"
+          class="bg-light p-3 mb-3 d-flex justify-content-between"
+        >
+          <span class="pl-5">{{ comment.content }} </span>
+          <span class="pr-4">
+            {{ comment.userid }} {{ comment.regtime | dateFormat }}</span
           >
         </b-col>
+
+        <b-col class="p-2 mb-3"
+          ><b-button
+            variant="secondary"
+            v-if="checkUserInfo.userid === comment.userid"
+            @click="deleteNowComment"
+            >X</b-button
+          ></b-col
+        >
       </b-row>
-    </b-card>
+    </b-container>
   </div>
 </template>
 
@@ -39,7 +40,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("commentStore", ["getComment", "deleteComment"]),
+    ...mapActions("commentStore", ["deleteComment"]),
     deleteNowComment() {
       if (confirm("정말로 삭제하시겠습니까?")) {
         this.deleteComment(this.comment);
