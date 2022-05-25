@@ -5,6 +5,7 @@
         <b-alert show><h3>게시글목록</h3></b-alert>
       </b-col>
     </b-row>
+
     <b-row>
       <b-col>
         <b-form @submit.prevent="search()">
@@ -22,36 +23,29 @@
       </b-col>
     </b-row>
     <br />
+
+    <b-table
+      hover
+      :items="articles"
+      :fields="fields"
+      :per-page="perPage"
+      :current-page="currentPage"
+      @row-clicked="goBoardItem"
+    ></b-table>
+    <b-pagination
+      align="center"
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      :limit="10"
+      aria-controls="my-table"
+    ></b-pagination>
     <b-row class="mb-1">
-      <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()"
-          >글쓰기</b-button
-        >
+      <b-col class="text-right mb-3">
+        <b-button variant="outline-secondary" @click="moveWrite()"
+          >글쓰기
+        </b-button>
       </b-col>
-    </b-row>
-    <b-row>
-      <b-col v-if="articles.length">
-        <b-table-simple hover responsive>
-          <b-thead head-variant="dark">
-            <b-tr>
-              <b-th>글번호</b-th>
-              <b-th>제목</b-th>
-              <b-th>조회수</b-th>
-              <b-th>작성자</b-th>
-              <b-th>작성일</b-th>
-            </b-tr>
-          </b-thead>
-          <tbody>
-            <!-- 하위 component인 ListRow에 데이터 전달(props) -->
-            <board-list-item
-              v-for="article in articles"
-              :key="article.articleno"
-              v-bind="article"
-            />
-          </tbody>
-        </b-table-simple>
-      </b-col>
-      <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
     </b-row>
   </b-container>
 </template>
@@ -59,50 +53,46 @@
 <script>
 /* eslint-disable */
 import { listArticle, searchArticleBySubject } from "@/api/board.js";
-import BoardListItem from "@/components/board/item/BoardListItem";
+//import moment from "moment";
 
 export default {
   name: "BoardList",
-  components: {
-    BoardListItem,
-  },
   data() {
     return {
+      fields: ["subject", "userid", "hit", "regtime"],
+      perPage: 10,
+      currentPage: 1,
       articles: [],
       text: "",
     };
   },
   created() {
-    let param = {
-      pg: 1,
-      spp: 20,
-      key: null,
-      word: null,
-    };
     listArticle(
-      param,
       (response) => {
         this.articles = response.data;
+        console.log(this.articles);
       },
       (error) => {
         console.log(error);
       }
     );
   },
+  computed: {
+    rows() {
+      return this.articles.length;
+    },
+  },
+  // filters: {
+  //   datefilter(date,format) {
+  //     return moment(new Date(date)).format(format);
+  //   },
+  // },
   methods: {
     moveWrite() {
       this.$router.push({ name: "boardRegister" });
     },
     search() {
-      // http.get(`/board/search?text=${this.text}`).then(({ data }) => {
-      //   this.articles = data;
-      //   console.log(this.articles);
-      // });
       let param = {
-        pg: 1,
-        spp: 10,
-        key: null,
-        word: null,
         text: this.text,
       };
       searchArticleBySubject(
@@ -114,6 +104,12 @@ export default {
           console.log(error);
         }
       );
+    },
+    goBoardItem(item) {
+      this.$router.push({
+        name: "boardDetail",
+        params: { articleno: item.articleno },
+      });
     },
   },
 };
