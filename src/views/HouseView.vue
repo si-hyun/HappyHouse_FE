@@ -5,14 +5,14 @@
     </h3>
     <br><br>
     <b-row>
-      <b-col>
+      <b-col cols="10">
         <h5 style="display: inline-block;"><strong>지역별 매물 검색</strong></h5>&nbsp&nbsp&nbsp&nbsp
-        <house-search-bar style="display: inline-block;"" @displayMarkers="displayMarkers"></house-search-bar>
+        <house-search-bar style="display: inline-block;" @displayMarkers="displayMarkers"></house-search-bar>
       </b-col>
-      <b-col
+      <b-col cols="2"
         ><b-button variant="success" @click="displayLikeApts(likeApts)"
-          style="margin-top: 20px;"
-          >관심 매물 보기</b-button
+          style="margin-top: 40px; float:right;"
+          >내 관심 매물 보기</b-button
         ></b-col
       >
     </b-row>
@@ -156,7 +156,7 @@ export default {
       ) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
         let houseName = this.houses[i].아파트;
-        // console.log(address);
+        console.log(address);
         // 주소로 좌표를 검색합니다
         this.geocoder.addressSearch(address, function (result, status) {
           // console.log(status);
@@ -169,7 +169,7 @@ export default {
             //   map: map,
             //   position: coords,
             // });
-            let imgsrc = require("@/assets/building.png");
+            let imgsrc = require("@/assets/apticon.png");
             let marker = addMarker(coords, i, imgsrc);
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
@@ -210,7 +210,7 @@ export default {
             //   map: map,
             //   position: coords,
             // });
-            let imgsrc = require("@/assets/building.png");
+            let imgsrc = require("@/assets/apticon.png");
             let marker = addMarker(coords, i, imgsrc);
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
@@ -230,8 +230,8 @@ export default {
         // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
         imgOptions = {
-          spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-          spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+          // spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+          // spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
           offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
         markerImage = new kakao.maps.MarkerImage(
@@ -300,10 +300,11 @@ export default {
       this.removeMarkers();
       this.removeInfoWindows();
       for (let i = 0; i < apts.length; i++) {
-        let houseName = apts[i].address.split(" ").pop();
-        // console.log(address);
+        let arr = apts[i].address.split(" ");
+        let houseName = arr.pop();
+        let address = arr.toString().replace(/,/g," ");
         // 주소로 좌표를 검색합니다
-        this.geocoder.addressSearch(apts[i].address, function (result, status) {
+        this.geocoder.addressSearch(address.trim(), function (result, status) {
           // console.log(status);
           // 정상적으로 검색이 완료됐으면
           if (status === kakao.maps.services.Status.OK) {
@@ -329,6 +330,7 @@ export default {
         });
       }
     },
+
   },
   mounted() {
     setTimeout(this.init, 500);
