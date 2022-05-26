@@ -6,6 +6,7 @@
       </h3>
     </div>
     <pre>
+      &#10;
       [ Happy House ] &#10;
       Developer: 김수만, 강시현 &#10;
       - 아파트 실거래 자료 조회 서비스 &#10
@@ -33,8 +34,8 @@ export default {
 }
 pre {
   margin-top: 50px;
-  margin-left: 1000px;
-  width: 1000px;
+  margin-left: 1150px;
+  width: 900px;
   height: 800px;
   padding: 30px;
   font-size: 30px;
@@ -42,25 +43,13 @@ pre {
   text-align: center;
   background-color: #ffffff;
   background-color: rgba(255, 255, 255, 0.5);
+  font-size: 27px;
+  font-family: myfont;
 }
-/* main {
-  height: 100vh;
-  background-image: url("@/assets/main.jpg");
-  background-size: cover;
+@font-face {
+  font-family: "myfont";
+  src: url("@/assets/fonts/KOTRA_GOTHIC.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-
-main p {
-  height: 700px;
-  width: 1000px;
-  background-color: rgba(0, 0, 0, 0.132);
-}
-
-.underline-orange {
-  display: inline-block;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 70%,
-    rgba(231, 149, 27, 0.3) 30%
-  );
-} */
 </style>
