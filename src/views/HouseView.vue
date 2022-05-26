@@ -6,23 +6,23 @@
     <br><br>
     <b-row>
       <b-col cols="10">
-        <h5 style="display: inline-block;"><strong>지역별 매물 검색</strong></h5>&nbsp&nbsp&nbsp&nbsp
+        <h5 class="mx-5" style="display: inline-block;"><strong>지역별 매물 검색</strong></h5>
         <house-search-bar style="display: inline-block;" @displayMarkers="displayMarkers"></house-search-bar>
       </b-col>
       <b-col cols="2"
         ><b-button variant="success" @click="displayLikeApts(likeApts)"
-          style="margin-top: 40px; float:right;"
+          style="margin-top: 22px; float:right;"
           >내 관심 매물 보기</b-button
         ></b-col
       >
     </b-row>
     <br>
     <b-row>
-      <b-col cols="4">
+      <b-col cols="2">
         <!-- <slider-bar1></slider-bar1> -->
         <slider-view></slider-view>
       </b-col>
-      <b-col cols="8">
+      <b-col cols="10">
         <kakao-map @readyMap="readyMap" :map="map"></kakao-map>
       </b-col>
     </b-row>

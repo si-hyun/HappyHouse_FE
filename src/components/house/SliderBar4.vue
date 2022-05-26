@@ -4,21 +4,23 @@
       <div>
         <h6 style="float: left">건축년도</h6>
         <br />
-        <i-input
-          id="yearfrom"
-          v-model="from"
-          :disabled="disabled"
-          style="width: 80px"
-        />
-        〜
-        <i-input
-          id="yearto"
-          v-model="to"
-          :disabled="disabled"
-          style="width: 80px"
-        />
+        <div style="display: none">
+          <i-input
+            id="yearfrom"
+            v-model="from"
+            :disabled="disabled"
+            style="width: 60px"
+          />
+          〜
+          <i-input
+            id="yearto"
+            v-model="to"
+            :disabled="disabled"
+            style="width: 60px"
+          />
+        </div>
       </div>
-      <div>비활성화 <i-switch v-model="disabled" /></div>
+      <div><i-switch v-model="disabled" /></div>
     </div>
     <VueSlider
       v-model="value"
