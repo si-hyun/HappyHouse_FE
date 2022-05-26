@@ -2,14 +2,14 @@
   <div>
     <div class="form" style="display: none">
       <i-input
-        id="pricefrom"
+        id="floorfrom"
         v-model="from"
         :disabled="disabled"
         style="width: 60px"
       />
       〜
       <i-input
-        id="priceto"
+        id="floorto"
         v-model="to"
         :disabled="disabled"
         style="width: 60px"

@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative">
-    <div id="map"></div>
+    <div id="map" style="height: 600px"></div>
     <!-- <p><button @click="removeCircles()">모두 지우기</button><br /></p> -->
     <ul id="category">
       <li id="BK9" data-order="0">
