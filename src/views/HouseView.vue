@@ -67,6 +67,8 @@ export default {
       // customOverlay: null,
       circles: [],
       infowindows: [],
+      // placeOverlay: null,
+      // contentNode: null,
     };
   },
   computed: {
@@ -84,7 +86,7 @@ export default {
     // },
   },
   methods: {
-    ...mapActions("houseStore", ["getSido", "getGugun", "getHouseList"]),
+    ...mapActions("houseStore", ["getSido", "getGugun", "getHouseList", "detailHouse"]),
     ...mapMutations("houseStore", [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
@@ -92,6 +94,31 @@ export default {
     ]),
     init() {
       this.geocoder = new kakao.maps.services.Geocoder();
+      this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
+
+      let div = document.createElement("div");
+      this.contentNode = div;
+      div.className = "placeinfo_wrap";
+
+      this.addEventHandle(
+        this.contentNode,
+        "mousedown",
+        kakao.maps.event.preventMap
+      );
+      this.addEventHandle(
+        this.contentNode,
+        "touchstart",
+        kakao.maps.event.preventMap
+      );
+
+      this.placeOverlay.setContent(this.contentNode);
+    },
+    addEventHandle(target, type, callback) {
+      if (target.addEventListener) {
+        target.addEventListener(type, callback);
+      } else {
+        target.attachEvent("on" + type, callback);
+      }
     },
     readyMap() {
       console.log("readyMap()");
@@ -156,7 +183,9 @@ export default {
       ) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
         let houseName = this.houses[i].아파트;
-        console.log(address);
+        let house = this.houses[i];
+        let detailHouse = this.detailHouse;
+        // console.log(address);
         // 주소로 좌표를 검색합니다
         this.geocoder.addressSearch(address, function (result, status) {
           // console.log(status);
@@ -171,6 +200,13 @@ export default {
             // });
             let imgsrc = require("@/assets/apticon.png");
             let marker = addMarker(coords, i, imgsrc);
+
+            (function (marker, house) {
+              kakao.maps.event.addListener(marker, "click", function () {
+                detailHouse(house);
+              });
+            })(marker, house);
+
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             let infowindow = new kakao.maps.InfoWindow({
@@ -178,6 +214,7 @@ export default {
             });
             putInfoWindow(infowindow);
             infowindow.open(map, marker);
+
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
@@ -197,6 +234,8 @@ export default {
         let address =
           this.cursido + " " + this.curgugun + " " + houses[i].도로명;
         let houseName = houses[i].아파트;
+        let house = houses[i];
+        let detailHouse = this.detailHouse;
         // console.log(address);
         // 주소로 좌표를 검색합니다
         this.geocoder.addressSearch(address, function (result, status) {
@@ -212,6 +251,13 @@ export default {
             // });
             let imgsrc = require("@/assets/apticon.png");
             let marker = addMarker(coords, i, imgsrc);
+
+            (function (marker, house) {
+              kakao.maps.event.addListener(marker, "click", function () {
+                detailHouse(house);
+              });
+            })(marker, house);
+
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             let infowindow = new kakao.maps.InfoWindow({
@@ -249,6 +295,42 @@ export default {
 
       return marker;
     },
+    // displayPlaceInfo(house, address, coords) {
+    //   console.log(coords);
+    //   var content =
+    //     '<div class="placeinfo">' +
+    //     // '   <a class="title" href="' +
+    //     // house.아파트 +
+    //     // '" target="_blank" title="' +
+    //     // house.아파트 +
+    //     // '">' +
+    //     house.아파트 +
+    //     "</a>";
+
+    //     content +=
+    //       '    <span title="' +
+    //       address +
+    //       '">' +
+    //       address +
+    //       "</span>" +
+    //       '  <span class="jibun" title="' +
+    //       house.전용면적 +
+    //       '">(전용면적: ' +
+    //       house.전용면적+ '㎡' +
+    //       ")</span>";
+
+    //   content +=
+    //     '    <span class="tel">' +
+    //     "거래일시: " + "2022년 " + house.월 + "월 " + house.일 + "일" +
+    //     "</span>" +
+    //     "</div>" +
+    //     '<div class="after"></div>';
+
+    //   this.contentNode.innerHTML = content;
+    //   console.log(this.contentNode);
+    //   this.placeOverlay.setPosition(new kakao.maps.LatLng(coords.lat, coords.lng));
+    //   this.placeOverlay.setMap(this.map);
+    // },
     // displayMarkers(places) {
     //   console.log("HouseView - displayMarkers()");
     //   console.log("places:", places);
@@ -303,6 +385,10 @@ export default {
         let arr = apts[i].address.split(" ");
         let houseName = arr.pop();
         let address = arr.toString().replace(/,/g," ");
+        let price = apts[i].price.substring(0, apts[i].price.length -2);
+        let house = {"아파트": apts[i].address.split(" ").pop(), "일련번호": apts[i].serialno, "거래금액":price, 
+        "전용면적": apts[i].area, "층": apts[i].floor };
+        let detailHouse = this.detailHouse;
         // 주소로 좌표를 검색합니다
         this.geocoder.addressSearch(address.trim(), function (result, status) {
           // console.log(status);
@@ -317,6 +403,13 @@ export default {
             // });
             let imgsrc = require("@/assets/heart.png");
             let marker = addMarker(coords, i, imgsrc);
+
+            (function (marker, house) {
+              kakao.maps.event.addListener(marker, "click", function () {
+                detailHouse(house);
+              });
+            })(marker, house);
+            
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             let infowindow = new kakao.maps.InfoWindow({
@@ -330,17 +423,16 @@ export default {
         });
       }
     },
-
-  },
-  mounted() {
-    setTimeout(this.init, 500);
-    if (this.wantseeapt) {
-      let arrhouse = [];
-      arrhouse.push(this.wantseeapt);
-      this.displayLikeApts(arrhouse);
-    }
-    this.CLEAR_WANT_SEE_HOUSE();
-  },
+    mounted() {
+      setTimeout(this.init, 500);
+      if (this.wantseeapt) {
+        let arrhouse = [];
+        arrhouse.push(this.wantseeapt);
+        this.displayLikeApts(arrhouse);
+      }
+      this.CLEAR_WANT_SEE_HOUSE();
+    },
+  }
 };
 </script>
 
