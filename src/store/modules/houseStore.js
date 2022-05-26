@@ -24,7 +24,6 @@ const houseStore = {
     houses: [],
     allhouses: [],
     totalCount: 0,
-    allhouses: null,
     house: null,
     likeApts: [],
     allLikeApts: [],
