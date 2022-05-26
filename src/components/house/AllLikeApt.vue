@@ -11,8 +11,6 @@
       v-for="(apt, index) in allLikeApts"
       :key="index"
     >
-      <b-icon icon="heart-fill" variant="danger" style="width: 20px; height: 20px;"></b-icon>
-      <h6 style="display: inline-block"><b-badge variant="danger">{{ apt.likecnt }}</b-badge></h6>
       <b-card-text>
         <table class="table">
           <tbody>
@@ -35,12 +33,26 @@
           </tbody>
         </table>
       </b-card-text>
+      <b-icon
+        icon="heart-fill"
+        variant="danger"
+        style="width: 20px; height: 20px"
+      ></b-icon>
+      <h6 style="display: inline-block">
+        <b-badge variant="danger">{{ apt.likecnt }}</b-badge>
+      </h6>
+      <b-button
+        @click="goMap(apt.serialno)"
+        variant="outline-primary"
+        class="mx-2"
+        >지도에서 보기</b-button
+      >
     </b-card>
   </b-row>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "AllLikeApt",
@@ -57,6 +69,11 @@ export default {
   },
   methods: {
     ...mapActions("houseStore", ["getAllLikeApt"]),
+    ...mapMutations("houseStore", ["SET_WANT_SEE_APT"]),
+    goMap(serialno) {
+      this.SET_WANT_SEE_APT(serialno);
+      this.$router.push({ name: "house" });
+    },
   },
 };
 </script>
