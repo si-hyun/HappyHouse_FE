@@ -233,7 +233,6 @@ export default {
             map.setBounds(bounds);
           } else console.log(status);
         });
-        console.log(itemEl);
       }
     },
     showMarkers(houses) {
