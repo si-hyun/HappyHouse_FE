@@ -10,6 +10,15 @@
       <slider-bar-4 :from="yearfrom" :to="yearto"></slider-bar-4>
       <button class="btn btn-outline-primary" @click="btnClick">검색</button>
     </div>
+    <!-- 
+    <div style="d-flex justify-content-start">
+      <div>
+        <i v-if="pricefrom || priceto"> (price){{ pricefrom }}~{{ priceto }}</i>
+        <i v-if="areafrom || areato"> (area){{ areafrom }}~{{ areato }} </i>
+        <i v-if="areafrom || areato"> (floor){{ floorfrom }}~{{ floorto }} </i>
+        <i v-if="yearfrom || yearto"> (year){{ yearfrom }}~{{ yearto }} </i>
+      </div>
+    </div> -->
   </div>
 </template>
 
