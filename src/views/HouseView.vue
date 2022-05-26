@@ -37,10 +37,10 @@
     </b-col>
     
     <br />
-      <b-col cols="2" style="margin-top:180px">
+      <b-col cols="3" style="margin-top:180px">
         <house-detail />
       </b-col>
-      <b-col cols="4" align="left" style="margin-top:130px">
+      <b-col cols="3" style="margin-top:130px">
         <house-list @showMarkers="showMarkers" />
       </b-col>
 
