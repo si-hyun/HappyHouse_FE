@@ -388,6 +388,7 @@ export default {
         let price = apts[i].price.substring(0, apts[i].price.length -2);
         let house = {"아파트": apts[i].address.split(" ").pop(), "일련번호": apts[i].serialno, "거래금액":price, 
         "전용면적": apts[i].area, "층": apts[i].floor };
+        console.log(house);
         let detailHouse = this.detailHouse;
         // 주소로 좌표를 검색합니다
         this.geocoder.addressSearch(address.trim(), function (result, status) {
@@ -423,16 +424,16 @@ export default {
         });
       }
     },
-    mounted() {
-      setTimeout(this.init, 500);
-      if (this.wantseeapt) {
-        let arrhouse = [];
-        arrhouse.push(this.wantseeapt);
-        this.displayLikeApts(arrhouse);
-      }
-      this.CLEAR_WANT_SEE_HOUSE();
-    },
-  }
+  },
+  mounted() {
+    setTimeout(this.init, 500);
+    if (this.wantseeapt) {
+      let arrhouse = [];
+      arrhouse.push(this.wantseeapt);
+      this.displayLikeApts(arrhouse);
+    }
+    this.CLEAR_WANT_SEE_HOUSE();
+  },
 };
 </script>
 
