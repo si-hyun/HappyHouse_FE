@@ -3,20 +3,27 @@
     <h3 class="underline-hotpink">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
-    <br><br>
+    <br /><br />
     <b-row>
       <b-col cols="10">
-        <h5 class="mx-5" style="display: inline-block;"><strong>지역별 매물 검색</strong></h5>
-        <house-search-bar style="display: inline-block;" @displayMarkers="displayMarkers"></house-search-bar>
+        <h5 class="mx-5" style="display: inline-block">
+          <strong>지역별 매물 검색</strong>
+        </h5>
+        <house-search-bar
+          style="display: inline-block"
+          @displayMarkers="displayMarkers"
+        ></house-search-bar>
       </b-col>
       <b-col cols="2"
-        ><b-button variant="success" @click="displayLikeApts(likeApts)"
-          style="margin-top: 22px; float:right;"
+        ><b-button
+          variant="success"
+          @click="displayLikeApts(likeApts)"
+          style="margin-top: 22px; float: right"
           >내 관심 매물 보기</b-button
         ></b-col
       >
     </b-row>
-    <br>
+    <br />
     <b-row>
       <b-col cols="2">
         <!-- <slider-bar1></slider-bar1> -->
@@ -86,7 +93,12 @@ export default {
     // },
   },
   methods: {
-    ...mapActions("houseStore", ["getSido", "getGugun", "getHouseList", "detailHouse"]),
+    ...mapActions("houseStore", [
+      "getSido",
+      "getGugun",
+      "getHouseList",
+      "detailHouse",
+    ]),
     ...mapMutations("houseStore", [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
@@ -173,7 +185,7 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (
@@ -182,7 +194,7 @@ export default {
         i++
       ) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
-        let houseName = this.houses[i].아파트;
+        // let houseName = this.houses[i].아파트;
         let house = this.houses[i];
         let detailHouse = this.detailHouse;
         // console.log(address);
@@ -209,16 +221,18 @@ export default {
 
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   // content: `<div style="width:150px;text-align:center;padding:6px 0; class="info-title">${houseName}</div>`,
+            //   content: `<span class="info-title">${houseName}</span>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
 
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
         });
+        console.log(itemEl);
       }
     },
     showMarkers(houses) {
@@ -227,13 +241,13 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (let i = 0; i < houses.length; i++) {
         let address =
           this.cursido + " " + this.curgugun + " " + houses[i].도로명;
-        let houseName = houses[i].아파트;
+        // let houseName = houses[i].아파트;
         let house = houses[i];
         let detailHouse = this.detailHouse;
         // console.log(address);
@@ -260,11 +274,11 @@ export default {
 
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   content: `<div style="width:150px;text-align:center;padding:6px 0;" class="info-title">${houseName}</div>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
@@ -347,24 +361,24 @@ export default {
     //     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
     //     // LatLngBounds 객체에 좌표를 추가합니다
     //     bounds.extend(placePosition);
-    //     // 마커와 검색결과 항목에 mouseover 했을때
-    //     // 해당 장소에 인포윈도우에 장소명을 표시합니다
-    //     // mouseout 했을 때는 인포윈도우를 닫습니다
-    //     (function (marker, title, code, place) {
-    //       kakao.maps.event.addListener(marker, "click", function () {
-    //         this.displayInfowindow(marker, title, place);
-    //       });
-    //       kakao.maps.event.addListener(this.map, "click", function () {
-    //         console.log(this.customOverlay);
-    //         if (this.customOverlay) this.customOverlay.setMap(null);
-    //       });
-    //       itemEl.onmouseover = function () {
-    //         this.displayInfowindow(marker, title);
-    //       };
-    //       itemEl.onmouseout = function () {
-    //         this.customOverlay.setMap(null);
-    //       };
-    //     })(marker, places[i].aptName, places[i].aptCode, places[i]);
+    // // 마커와 검색결과 항목에 mouseover 했을때
+    // // 해당 장소에 인포윈도우에 장소명을 표시합니다
+    // // mouseout 했을 때는 인포윈도우를 닫습니다
+    // (function (marker, title, code, place) {
+    //   kakao.maps.event.addListener(marker, "click", function () {
+    //     this.displayInfowindow(marker, title, place);
+    //   });
+    //   kakao.maps.event.addListener(this.map, "click", function () {
+    //     console.log(this.customOverlay);
+    //     if (this.customOverlay) this.customOverlay.setMap(null);
+    //   });
+    //   itemEl.onmouseover = function () {
+    //     this.displayInfowindow(marker, title);
+    //   };
+    //   itemEl.onmouseout = function () {
+    //     this.customOverlay.setMap(null);
+    //   };
+    // })(marker, places[i].aptName, places[i].aptCode, places[i]);
 
     //     fragment.appendChild(itemEl);
     //   }
@@ -378,18 +392,24 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (let i = 0; i < apts.length; i++) {
         let arr = apts[i].address.split(" ");
         let houseName = arr.pop();
-        let address = arr.toString().replace(/,/g," ");
-        let area = apts[i].area.substring(0, apts[i].area.length-1);
-        let floor = apts[i].floor.substring(0, apts[i].floor.length-1);
-        let price = apts[i].price.substring(0, apts[i].price.length -2);
-        let house = {"아파트": apts[i].address.split(" ").pop(), "일련번호": apts[i].serialno, "거래금액":price, 
-        "전용면적": area, "층": floor };
+        let address = arr.toString().replace(/,/g, " ");
+        let area = apts[i].area.substring(0, apts[i].area.length - 1);
+        let floor = apts[i].floor.substring(0, apts[i].floor.length - 1);
+        let price = apts[i].price.substring(0, apts[i].price.length - 2);
+        let house = {
+          아파트: apts[i].address.split(" ").pop(),
+          일련번호: apts[i].serialno,
+          거래금액: price,
+          전용면적: area,
+          층: floor,
+          건축년도: apts[i].builtyear,
+        };
         console.log(house);
         let detailHouse = this.detailHouse;
         // 주소로 좌표를 검색합니다
@@ -412,14 +432,15 @@ export default {
                 detailHouse(house);
               });
             })(marker, house);
-            
+
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   // content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            //   content: `<span class="info-title">${houseName}</span>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
@@ -448,5 +469,15 @@ export default {
     rgba(231, 27, 139, 0.3) 30%
   );
 }
-</style>
+
+.info-title {
+  display: block;
+  background: #50627f;
+  color: #fff;
+  text-align: center;
+  height: 24px;
+  line-height: 22px;
+  border-radius: 4px;
+  padding: 0px 10px;
+}
 </style>
