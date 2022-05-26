@@ -2,23 +2,25 @@
   <div>
     <div class="form">
       <div>
-        <h6 style="float: left;">매매가</h6>
-        <br>
-        <i-input
-          id="pricefrom"
-          v-model="from"
-          :disabled="disabled"
-          style="width: 80px"
-        />
-        〜
-        <i-input
-          id="priceto"
-          v-model="to"
-          :disabled="disabled"
-          style="width: 80px"
-        />
+        <h6 style="float: left">매매가</h6>
+        <br />
+        <div style="display: none">
+          <i-input
+            id="pricefrom"
+            v-model="from"
+            :disabled="disabled"
+            style="width: 60px"
+          />
+          〜
+          <i-input
+            id="priceto"
+            v-model="to"
+            :disabled="disabled"
+            style="width: 60px"
+          />
+        </div>
       </div>
-      <div>비활성화 <i-switch v-model="disabled" /></div>
+      <div><i-switch v-model="disabled" /></div>
     </div>
     <VueSlider
       v-model="value"
