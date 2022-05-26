@@ -67,6 +67,8 @@ export default {
       // customOverlay: null,
       circles: [],
       infowindows: [],
+      placeOverlay: null,
+      contentNode: null,
     };
   },
   computed: {
@@ -92,6 +94,31 @@ export default {
     ]),
     init() {
       this.geocoder = new kakao.maps.services.Geocoder();
+      this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
+
+      let div = document.createElement("div");
+      this.contentNode = div;
+      div.className = "placeinfo_wrap";
+
+      this.addEventHandle(
+        this.contentNode,
+        "mousedown",
+        kakao.maps.event.preventMap
+      );
+      this.addEventHandle(
+        this.contentNode,
+        "touchstart",
+        kakao.maps.event.preventMap
+      );
+
+      this.placeOverlay.setContent(this.contentNode);
+    },
+    addEventHandle(target, type, callback) {
+      if (target.addEventListener) {
+        target.addEventListener(type, callback);
+      } else {
+        target.attachEvent("on" + type, callback);
+      }
     },
     readyMap() {
       console.log("readyMap()");
@@ -146,7 +173,7 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (
@@ -156,6 +183,8 @@ export default {
       ) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
         let houseName = this.houses[i].아파트;
+        let houses = this.houses;
+        let displayPlaceInfo = this.displayPlaceInfo;
         console.log(address);
         // 주소로 좌표를 검색합니다
         this.geocoder.addressSearch(address, function (result, status) {
@@ -172,12 +201,18 @@ export default {
             let imgsrc = require("@/assets/apticon.png");
             let marker = addMarker(coords, i, imgsrc);
             bounds.extend(coords);
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // // 인포윈도우로 장소에 대한 설명을 표시합니다
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
+
+            (function (marker, house) {
+              kakao.maps.event.addListener(marker, "click", function () {
+                displayPlaceInfo(house, address, coords);
+              });
+            })(marker, houses[i]);
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
@@ -249,6 +284,43 @@ export default {
 
       return marker;
     },
+    displayPlaceInfo(house, address, coords) {
+      console.log(coords);
+      var content =
+        '<div class="placeinfo">' +
+        // '   <a class="title" href="' +
+        // house.아파트 +
+        // '" target="_blank" title="' +
+        // house.아파트 +
+        // '">' +
+        house.아파트 +
+        "</a>";
+
+        content +=
+          '    <span title="' +
+          address +
+          '">' +
+          address +
+          "</span>" +
+          '  <span class="jibun" title="' +
+          house.전용면적 +
+          '">(전용면적: ' +
+          house.전용면적+ '㎡' +
+          ")</span>";
+
+      content +=
+        '    <span class="tel">' +
+        "거래일시: " + "2022년 " + house.월 + "월 " + house.일 + "일" +
+        "</span>" +
+        "</div>" +
+        '<div class="after"></div>';
+
+      this.contentNode.innerHTML = content;
+      console.log(this.contentNode);
+      this.placeOverlay.setPosition(new kakao.maps.LatLng(coords.lat, coords.lng));
+      this.placeOverlay.setMap(this.map);
+    },
+  },
     // displayMarkers(places) {
     //   console.log("HouseView - displayMarkers()");
     //   console.log("places:", places);
@@ -330,8 +402,6 @@ export default {
         });
       }
     },
-
-  },
   mounted() {
     setTimeout(this.init, 500);
     if (this.wantseeapt) {
