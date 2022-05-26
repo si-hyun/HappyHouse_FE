@@ -13,6 +13,7 @@
     </b-col> -->
       <b-col class="sm-3">
         <b-form-select
+          style="width: 300px"
           id="sidoSelect"
           v-model="sidoCode"
           :options="sidos"
@@ -21,6 +22,7 @@
       </b-col>
       <b-col class="sm-3">
         <b-form-select
+          style="width: 300px"
           id="gugunSelect"
           v-model="gugunCode"
           :options="guguns"

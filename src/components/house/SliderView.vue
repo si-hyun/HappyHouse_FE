@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="mt-3" style="text-align: right; color: gray">
+    <!-- <div class="mt-3" style="text-align: right; color: gray">
       <span>비활성화</span>
+    </div> -->
+    <div class="d-flex justify-content-around">
+      <slider-bar-1 :from="pricefrom" :to="priceto"></slider-bar-1>
+      <slider-bar-2 :from="areafrom" :to="areato"></slider-bar-2>
+      <slider-bar-3 :from="floorfrom" :to="floorto"></slider-bar-3>
+      <slider-bar-4 :from="yearfrom" :to="yearto"></slider-bar-4>
+      <button class="btn btn-outline-primary" @click="btnClick">검색</button>
     </div>
-    <slider-bar-1 :from="pricefrom" :to="priceto" class="my-3"></slider-bar-1>
-    <slider-bar-2 :from="areafrom" :to="areato" class="mb-3"></slider-bar-2>
-    <slider-bar-3 :from="floorfrom" :to="floorto" class="mb-3"></slider-bar-3>
-    <slider-bar-4 :from="yearfrom" :to="yearto" class="mb-3"></slider-bar-4>
-    <button class="btn btn-outline-primary" @click="btnClick">검색</button>
   </div>
 </template>
 

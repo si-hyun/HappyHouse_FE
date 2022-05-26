@@ -1,43 +1,40 @@
 <template>
   <div>
-    <div class="form">
-      <div>
-        <h6 style="float: left">건축년도</h6>
-        <br />
-        <div style="display: none">
-          <i-input
-            id="yearfrom"
-            v-model="from"
-            :disabled="disabled"
-            style="width: 60px"
-          />
-          〜
-          <i-input
-            id="yearto"
-            v-model="to"
-            :disabled="disabled"
-            style="width: 60px"
-          />
-        </div>
-      </div>
-      <div><i-switch v-model="disabled" /></div>
+    <div class="form" style="display: none">
+      <i-input
+        id="pricefrom"
+        v-model="from"
+        :disabled="disabled"
+        style="width: 60px"
+      />
+      〜
+      <i-input
+        id="priceto"
+        v-model="to"
+        :disabled="disabled"
+        style="width: 60px"
+      />
+      <!-- <div><i-switch v-model="disabled" /></div> -->
     </div>
-    <VueSlider
-      v-model="value"
-      :min="min"
-      :max="max"
-      :interval="interval"
-      :disabled="disabled"
-      :tooltip="tooltip"
-      :tooltip-placement="tooltipPlacement"
-      :tooltip-formatter="formatter"
-      :tooltip-style="tooltipStyle"
-      :dot-size="dotSize"
-      :dot-style="dotStyle"
-      :rail-style="railStyle"
-      :process-style="processStyle"
-    />
-    <br />
+    <div class="d-flex justify-content-around">
+      <span class="mx-3">건축년도</span>
+      <VueSlider
+        style="width: 100px"
+        v-model="value"
+        :min="min"
+        :max="max"
+        :interval="interval"
+        :disabled="disabled"
+        :tooltip="tooltip"
+        :tooltip-placement="tooltipPlacement"
+        :tooltip-formatter="formatter"
+        :tooltip-style="tooltipStyle"
+        :dot-size="dotSize"
+        :dot-style="dotStyle"
+        :rail-style="railStyle"
+        :process-style="processStyle"
+      />
+    </div>
   </div>
 </template>
 
