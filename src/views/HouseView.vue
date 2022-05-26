@@ -394,8 +394,9 @@ export default {
       this.removeInfoWindows();
       for (let i = 0; i < apts.length; i++) {
         let arr = apts[i].address.split(" ");
-        // let houseName = arr.pop();
+        let houseName = arr.pop();
         let address = arr.toString().replace(/,/g," ");
+        console.log(address);
         let area = apts[i].area.substring(0, apts[i].area.length-1);
         let floor = apts[i].floor.substring(0, apts[i].floor.length-1);
         let price = apts[i].price.substring(0, apts[i].price.length -2);
