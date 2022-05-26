@@ -6,7 +6,7 @@
       </h3>
     </div>
     <pre>
-   &#10;
+      &#10;
       [ Happy House ] &#10;
       Developer: 김수만, 강시현 &#10;
       - 아파트 실거래 자료 조회 서비스 &#10
@@ -52,25 +52,4 @@ pre {
   font-weight: normal;
   font-style: normal;
 }
-
-/* main {
-  height: 100vh;
-  background-image: url("@/assets/main.jpg");
-  background-size: cover;
-}
-
-main p {
-  height: 700px;
-  width: 1000px;
-  background-color: rgba(0, 0, 0, 0.132);
-}
-
-.underline-orange {
-  display: inline-block;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 70%,
-    rgba(231, 149, 27, 0.3) 30%
-  );
-} */
 </style>
