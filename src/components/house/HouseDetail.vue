@@ -1,63 +1,47 @@
 <template>
-  <b-container v-if="house" class="bv-example-row">
-    <b-row class="mb-2">
-      <b-col cols="9"
-        ><h3>{{ house.아파트 }}</h3></b-col
-      >
-      <b-col cols="3">
-        <b-button
-          id="likeBtn"
-          ref="likeBtn"
-          variant="outline-danger"
-          @click="registerLikeApt"
+  <b-container v-if="house" class="bv-example-row mt-1">
+    <div class="jumbotron mt-3 d-flex flex-column justify-content-around">
+      <b-row class="mb-5">
+        <b-col cols="9"
+          ><h3>{{ house.아파트 }}</h3></b-col
         >
-          <b-icon icon="heart"> 관심매물 등록 </b-icon>
-        </b-button>
-      </b-col>
-    </b-row>
-    <!--
-    <b-row class="mb-1 mt-1">
-      <b-col
-        ><b-img :src="require('@/assets/apt.png')" fluid-grow></b-img
-      ></b-col>
-    </b-row>
-    !-->
-    <b-row>
-      <b-col>
-        <b-alert show variant="secondary"
-          >일련번호 : {{ house.일련번호 }}</b-alert
-        >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-alert show variant="danger"
-          >매매가 :
-          {{
-            (parseInt(house.거래금액.replace(",", "")) * 10000) | price
-          }}원</b-alert
-        >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-alert show variant="primary"
-          >전용면적 : {{ house.전용면적 }}㎡
-        </b-alert>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-alert show variant="warning">층수 : {{ house.층 }}층</b-alert>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-alert show variant="info"
-          >건축년도 : {{ house.건축년도 }}년
-        </b-alert>
-      </b-col>
-    </b-row>
+        <b-col cols="3">
+          <b-button
+            id="likeBtn"
+            ref="likeBtn"
+            variant="outline-danger"
+            @click="registerLikeApt"
+          >
+            <b-icon icon="heart"> 관심매물 등록 </b-icon>
+          </b-button>
+        </b-col>
+      </b-row>
+
+      <table class="table">
+        <tr>
+          <th scope="row">일련번호 :</th>
+          <td>{{ house.일련번호 }}</td>
+        </tr>
+        <tr>
+          <th scope="row">매매가 :</th>
+          <td>
+            {{ (parseInt(house.거래금액.replace(",", "")) * 10000) | price }}원
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">전용면적 :</th>
+          <td>{{ house.전용면적 }}㎡</td>
+        </tr>
+        <tr>
+          <th scope="row">층수 :</th>
+          <td>{{ house.층 }}층</td>
+        </tr>
+        <tr>
+          <th scope="row">건축년도 :</th>
+          <td>{{ house.건축년도 }}년</td>
+        </tr>
+      </table>
+    </div>
   </b-container>
 </template>
 
