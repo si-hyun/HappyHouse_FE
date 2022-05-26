@@ -42,18 +42,20 @@
     <b-row>
       <b-col>
         <b-alert show variant="primary"
-          >전용면적 : {{ house.전용면적 }}㎡
+          >전용면적 : {{ house.전용면적 }}
         </b-alert>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-alert show variant="warning">층수 : {{ house.층 }}층</b-alert>
+        <b-alert show variant="warning">층수 : {{ house.층 }}</b-alert>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-alert show variant="info">건축년도 : {{ house.건축년도 }}년 </b-alert>
+        <b-alert show variant="info"
+          >건축년도 : {{ house.건축년도 }}년
+        </b-alert>
       </b-col>
     </b-row>
   </b-container>

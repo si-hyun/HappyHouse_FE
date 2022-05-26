@@ -423,7 +423,9 @@ export default {
         });
       }
     },
-    mounted() {
+  },
+  mounted() {
+      console.log("Here is Mouneted")
       setTimeout(this.init, 500);
       if (this.wantseeapt) {
         let arrhouse = [];
@@ -432,7 +434,6 @@ export default {
       }
       this.CLEAR_WANT_SEE_HOUSE();
     },
-  }
 };
 </script>
 
