@@ -184,7 +184,7 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (
@@ -193,7 +193,7 @@ export default {
         i++
       ) {
         let address = sido + " " + gugun + " " + this.houses[i].도로명;
-        let houseName = this.houses[i].아파트;
+        // let houseName = this.houses[i].아파트;
         let house = this.houses[i];
         let detailHouse = this.detailHouse;
         // console.log(address);
@@ -220,11 +220,11 @@ export default {
 
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
 
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
@@ -238,13 +238,13 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (let i = 0; i < houses.length; i++) {
         let address =
           this.cursido + " " + this.curgugun + " " + houses[i].도로명;
-        let houseName = houses[i].아파트;
+        // let houseName = houses[i].아파트;
         let house = houses[i];
         let detailHouse = this.detailHouse;
         // console.log(address);
@@ -271,11 +271,11 @@ export default {
 
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
@@ -389,12 +389,12 @@ export default {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       let addMarker = this.addMarker;
-      let putInfoWindow = this.putInfoWindow;
+      // let putInfoWindow = this.putInfoWindow;
       this.removeMarkers();
       this.removeInfoWindows();
       for (let i = 0; i < apts.length; i++) {
         let arr = apts[i].address.split(" ");
-        let houseName = arr.pop();
+        // let houseName = arr.pop();
         let address = arr.toString().replace(/,/g," ");
         let area = apts[i].area.substring(0, apts[i].area.length-1);
         let floor = apts[i].floor.substring(0, apts[i].floor.length-1);
@@ -426,11 +426,11 @@ export default {
             
             bounds.extend(coords);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
-            let infowindow = new kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
-            });
-            putInfoWindow(infowindow);
-            infowindow.open(map, marker);
+            // let infowindow = new kakao.maps.InfoWindow({
+            //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${houseName}</div>`,
+            // });
+            // putInfoWindow(infowindow);
+            // infowindow.open(map, marker);
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setBounds(bounds);
           } else console.log(status);
